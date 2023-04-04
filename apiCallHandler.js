@@ -15,7 +15,7 @@ export const apis= {
   /*BASE APIS*/
    USER_APIS_BASE_URL: "api/v1/users/kk",
    ROLE_APIS_BASE_URL: "api/v1/role",
-   VEHICLE_APIS_BASE_URL: "api/v1/vehicle",
+   VEHICLE_APIS_BASE_URL: "api/v1/projects",
    REVENUE_APIS_BASE_URL: "api/v1/revenue",
    PARKING_AREA_APIS_BASE_URL: "api/v1/area",
 

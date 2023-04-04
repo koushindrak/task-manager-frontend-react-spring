@@ -57,7 +57,7 @@ export default class HomePage extends React.PureComponent {
       { "path": "/users", "component": ManageUsers },
       { "path": "/revenues", "component": ManageRevenues },
       { "path": "/parkingAreas", "component": ParkingAreas },
-      { "path": "/vehicles", "component": ManageVehicles },
+      { "path": "/projects", "component": ManageVehicles },
       { "path": "/addOrEditParkingArea/:id?", "component": AddOrEditParkingArea },
       { "path": "/", "component": Dashboard }
     ],
@@ -130,10 +130,10 @@ export default class HomePage extends React.PureComponent {
                 </li>
 
 
-                <li data-value className={window.location.pathname === "/vehicles" ? "active" : ""}>
-                  <Link to='/vehicles' >
+                <li data-value className={window.location.pathname === "/projects" ? "active" : ""}>
+                  <Link to='/projects' >
                     <a >
-                      Manage Vehicles
+                      Manage Projects
                   </a>
                   </Link>
                 </li>

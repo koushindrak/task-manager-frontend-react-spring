@@ -60,32 +60,33 @@ export class ManageVehicles extends React.Component {
 
   columns = [
     {
-      Header: 'Vehicle NO',
-      accessor:'vehicleNo',
+      Header: 'Name',
+      accessor:'name',
       filterable: true,
       style: { textAlign: "center" }
     },
     {
-      Header: 'Parking Area Id',
-      accessor: 'parkingAreaId',
+      Header: 'Description',
+      accessor: 'description',
       filterable: true,
       style: { textAlign: "center" }
     },
     {
-      Header: 'Vehicle Type',
-      accessor: 'vehicleType',
+      Header: 'Start Date',
+      Cell: row => (<span>{new Date(row.original.startDate).toLocaleString('en-US')}</span>),
+      accessor: 'startDate',
       filterable: true,
       style: { textAlign: "center" },
     },
+    // {
+    //   Header: 'Parking Area GPS Coordinates',
+    //   Cell: row => (<span>{row.original.lat + "," + row.original.lng}</span>),
+    //   filterable: true,
+    //   style: { textAlign: "center" },
+    // },
     {
-      Header: 'Parking Area GPS Coordinates',
-      Cell: row => (<span>{row.original.lat + "," + row.original.lng}</span>),
-      filterable: true,
-      style: { textAlign: "center" },
-    },
-    {
-      Header: 'Created At',
-      Cell: row => (<span>{new Date(row.original.createdAt).toLocaleString('en-US')}</span>),
+      Header: 'End Date',
+      Cell: row => (<span>{new Date(row.original.endDate).toLocaleString('en-US')}</span>),
       filterable: false,
       style: { textAlign: "center" },
     },
