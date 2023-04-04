@@ -244,7 +244,7 @@ body .container{
     height: 100%;
 }
 
-.vpsLogo { 
+.vpsLogo {
     height: 200px
 }
 .sidenavContainer .sideNavLogo {
@@ -545,18 +545,22 @@ color: white;
   }
 
   /* Modal Content */
-  .customModal-content {
-    position: fixed;
-    bottom: 0;
-    background-color: #fefefe;
-    right:0px;
-    width: 30%;
-    height: 60%;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s;
-  }
+.customModal-content {
+  position: fixed; /* Set the position to fixed so the element stays in place */
+  top: 50%; /* Set the top property to 50% to center the element vertically */
+  left: 50%; /* Set the left property to 50% to center the element horizontally */
+  transform: translate(-50%, -50%); /* Use the transform property to center the element perfectly */
+  background-color: #fefefe; /* Set the background color */
+  width: 30%; /* Set the width of the element */
+  height: 80%; /* Set the height of the element */
+  -webkit-animation-name: slideIn; /* Use webkit prefix for Safari/Chrome */
+  -webkit-animation-duration: 0.4s; /* Set the duration of the animation */
+  animation-name: slideIn; /* Use non-prefixed version for other browsers */
+  animation-duration: 0.4s; /* Set the duration of the animation */
+  overflow-y: scroll; /* Add this property to enable vertical scrolling */
+
+}
+
 
   /* The Close Button */
   .close {
@@ -724,7 +728,7 @@ color: white;
     0%   {transform:translateX(-14px);}
     50%  {transform:translateX(14px);}
     100% {transform:translateX(-14px);}
-  }    
+  }
 
 
 
@@ -773,7 +777,7 @@ color: white;
     display: flex;
 }
 
-.bookingSlot { 
+.bookingSlot {
     height: 150px;
     padding: 10px;
     margin: 10px;
@@ -825,7 +829,7 @@ ul.pageList li:hover:not(.booked){
     font-weight: 500;
 }
 
-.noDataFound { 
+.noDataFound {
     height: 100%;
     justify-content: center;
     flex-direction: column;
@@ -885,7 +889,7 @@ justify-content: center
     z-index: 9999;
     /* background: url(//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Phi_fenomeni.gif/50px-Phi_fenomeni.gif) 50% 50% no-repeat rgb(249,249,249); */
 }
-  
+
 .card-header.panelHeader {
     background-color: transparent;
     border: 0;
@@ -894,8 +898,8 @@ justify-content: center
     margin: 0 10px;
     padding: 10px 15px;
     z-index: 1;
-    min-height: 40px;        
-    
+    min-height: 40px;
+
 }
 .cardPanel {
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.1);
@@ -923,7 +927,7 @@ justify-content: center
         color: #ad5389;
     }
 
-    .pd-r-7 { 
+    .pd-r-7 {
         padding-right:7px ;
     }
     .pd-t-10 {

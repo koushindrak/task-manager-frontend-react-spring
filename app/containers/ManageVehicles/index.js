@@ -271,30 +271,50 @@ export class ManageVehicles extends React.Component {
                 <div className="customModal-body">
 
                   <div className="form-group">
-                    <label htmlFor="vehicleNo">Vehicle No :</label>
-                    <input type="text" id="vehicleNo" autoComplete="off" value={this.state.payload.vehicleNo} className="form-control" placeholder="Vehicle No"
+                    <label htmlFor="name">Project Name :</label>
+                    <input type="text" id="name" autoComplete="off" value={this.state.payload.name} className="form-control" placeholder="Project Name"
                            required onChange={this.onChangeHandler}/>
                   </div>
 
                   <div className="form-group">
-                    <label form="vehicleType"> Vehicle Type : </label>
-                    <select name="vehicleType" id="vehicleType" value={this.state.payload.vehicleType} required onChange={this.onChangeHandler}>
-                      <option key="CAR" value="CAR">Car</option>)
-                      <option key="BIKE" value="BIKE">Bike</option>)
-                      <option key="BICYCLE" value="BICYCLE">Bicycle</option>)
-                    </select>
+                    <label form="description"> Project Description : </label>
+                    <input type="text" id="description" autoComplete="off" value={this.state.payload.description} className="form-control" placeholder="Project Description"
+                           required onChange={this.onChangeHandler}/>
+                    {/*<select name="description" id="description" value={this.state.payload.description} required onChange={this.onChangeHandler}>*/}
+                    {/*  <option key="CAR" value="CAR">Car</option>)*/}
+                    {/*  <option key="BIKE" value="BIKE">Bike</option>)*/}
+                    {/*  <option key="BICYCLE" value="BICYCLE">Bicycle</option>)*/}
+                    {/*</select>*/}
                   </div>
 
                   <div className="form-group">
-                    <label> Parking Areas : </label>
-                    <select className="form-control" value={this.state.payload.parkingAreaId} name="parkingAreaId" id="parkingAreaId" required onChange={this.onChangeHandler}>
-                      <option value=""> select</option>
-                      {this.state.parkingAreas.map((type, index) => {
-                        return (<option key={index} value={type.id}>{type.id}</option>)
-                      })
-                      }
+                    <label htmlFor="startDate">Project Start Date :</label>
+                    <input type="datetime" id="startDate" autoComplete="off" value={ new Date(this.state.payload.startDate).toLocaleString('en-US')} className="form-control" placeholder="Project Start Date"
+                           required onChange={this.onChangeHandler}/>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="endDate">Project End Date :</label>
+                    <input type="datetime" id="endDate" autoComplete="off" value={ new Date(this.state.payload.endDate).toLocaleString('en-US')} className="form-control" placeholder="Project End Date"
+                           required onChange={this.onChangeHandler}/>
+                  </div>
+                  <div className="form-group">
+                    <label form="status"> Project Status : </label>
+                    <select name="status" id="status" value={this.state.payload.status} required onChange={this.onChangeHandler}>
+                      <option key="ACTIVE" value="ACTIVE">ACTIVE</option>)
+                      <option key="INACTIVE" value="INACTIVE">INACTIVE</option>)
                     </select>
                   </div>
+                  {/*<div className="form-group">*/}
+                  {/*  <label> Parking Areas : </label>*/}
+                  {/*  <select className="form-control" value={this.state.payload.parkingAreaId} name="parkingAreaId" id="parkingAreaId" required onChange={this.onChangeHandler}>*/}
+                  {/*    <option value=""> select</option>*/}
+                  {/*    {this.state.parkingAreas.map((type, index) => {*/}
+                  {/*      return (<option key={index} value={type.id}>{type.id}</option>)*/}
+                  {/*    })*/}
+                  {/*    }*/}
+                  {/*  </select>*/}
+                  {/*</div>*/}
                 </div>
               </div>
             </form>

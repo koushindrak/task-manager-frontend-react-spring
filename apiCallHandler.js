@@ -81,14 +81,14 @@ function setUrlAndMethod(type, url, action, method) {
     case apiTypes.GET_ALL:
       break;
     case  apiTypes.GET_BY_ID:
-      url = url + action.id
+      url = url + "/"+action.id
       break;
     case  apiTypes.UPDATE_BY_ID:
-      url = url + action.payload.id;
+      url = url +"/"+ action.payload.id;
       method = axios.put;
       break;
     case  apiTypes.DELETE_BY_ID:
-      url = url + action.id;
+      url = url +"/"+ action.id;
       method = axios.delete;
       break;
     case  apiTypes.CREATE:
