@@ -35,31 +35,44 @@ class NotificationModal extends React.Component {
     notificationId: ''
   }
   componentDidMount() {
+    console.log("Notification Modal-----",this.props)
     let timeOutTime = 10000;
-    Array.isArray(this.props.message) ?
-      this.props.message.map((msg, index) => {
-        store.addNotification({
-          title: "",
-          message: typeof(msg) == "object" ? msg.message : msg,
-          type: this.props.type === "success" ? "success" : "danger",
-          insert: "top",
-          container: "top-right",
-          animationIn: ["animated", "fadeIn"],
-          animationOut: ["animated", "fadeOut"],
-        })
-      })
-      :
-      store.addNotification({
-        title: "",
-        message: this.props.message,
-        type: this.props.isPubnub ? "default" : this.props.type === "success" ? "success" : "danger",
-        insert: "top",
-        container: this.props.isPubnub ? "bottom-left" : "top-right",
-        showIcon: true,
-        animationIn: ["animated", "bounceIn"],
-        animationOut: ["animated", "fadeOut"],
+    store.addNotification({
+      title: "",
+      message: this.props.type === "success" ? "Request Completed SuccessFully" : "Something Went wrong, Please Try again after some time...",
+      type: this.props.type === "success" ? "success" : "danger",
+      insert: "top",
+      container: this.props.type === "success" ? "top-right" : "top-right",
+      showIcon: true,
+      animationIn: ["animated", "bounceIn"],
+      animationOut: ["animated", "fadeOut"],
 
-      })
+    })
+
+    // Array.isArray(this.props.message) ?
+    //   this.props.message.map((msg, index) => {
+    //     store.addNotification({
+    //       title: "",
+    //       message: typeof(msg) == "object" ? msg.message : msg,
+    //       type: this.props.type === "success" ? "success" : "danger",
+    //       insert: "top",
+    //       container: "top-right",
+    //       animationIn: ["animated", "fadeIn"],
+    //       animationOut: ["animated", "fadeOut"],
+    //     })
+    //   })
+    //   :
+    //   store.addNotification({
+    //     title: "",
+    //     message: this.props.message,
+    //     type: this.props.isPubnub ? "default" : this.props.type === "success" ? "success" : "danger",
+    //     insert: "top",
+    //     container: this.props.isPubnub ? "bottom-left" : "top-right",
+    //     showIcon: true,
+    //     animationIn: ["animated", "bounceIn"],
+    //     animationOut: ["animated", "fadeOut"],
+    //
+    //   })
 
     timeOutTime = 3000;
     timeOutClose = setTimeout(() => this.props.onCloseHandler(), timeOutTime);

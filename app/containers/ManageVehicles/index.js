@@ -214,6 +214,8 @@ export class ManageVehicles extends React.Component {
     let payload = this.state.payload;
     if(this.state.isEditVehicle){
       payload.id=this.state.selectedVehicleId;
+      payload.startDate = Date.parse(payload.startDate)
+      payload.endDate = Date.parse(payload.endDate)
       this.props.updateVehicle(payload);
     }else {
       this.props.createVehicle(payload);
@@ -230,6 +232,28 @@ export class ManageVehicles extends React.Component {
     payload[event.currentTarget.id] = event.currentTarget.value;
     this.setState({ payload })
   }
+
+  convertStartDateToDateTimeLocal = event => {
+    const milliseconds =this.state.payload.startDate; // Example milliseconds value
+    return this.getDateTimeLocal(milliseconds);
+  }
+
+  convertEndDateToDateTimeLocal = event => {
+    const milliseconds =this.state.payload.endDate; // Example milliseconds value
+    return this.getDateTimeLocal(milliseconds);
+  }
+
+  getDateTimeLocal(milliseconds) {
+    const date = new Date(milliseconds);
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    const hours = `${date.getHours()}`.padStart(2, '0');
+    const minutes = `${date.getMinutes()}`.padStart(2, '0');
+    const datetimeLocal = `${year}-${month}-${day}T${hours}:${minutes}`;
+    return datetimeLocal
+  }
+
   render() {
     return (
       <div>
@@ -289,13 +313,17 @@ export class ManageVehicles extends React.Component {
 
                   <div className="form-group">
                     <label htmlFor="startDate">Project Start Date :</label>
-                    <input type="datetime" id="startDate" autoComplete="off" value={ new Date(this.state.payload.startDate).toLocaleString('en-US')} className="form-control" placeholder="Project Start Date"
+                    <input type="datetime-local" id="startDate" autoComplete="off"
+                           value={this.convertStartDateToDateTimeLocal(this.state.payload.startDate)}
+                           className="form-control" placeholder="Project Start Date"
                            required onChange={this.onChangeHandler}/>
                   </div>
 
                   <div className="form-group">
                     <label htmlFor="endDate">Project End Date :</label>
-                    <input type="datetime" id="endDate" autoComplete="off" value={ new Date(this.state.payload.endDate).toLocaleString('en-US')} className="form-control" placeholder="Project End Date"
+                    <input type="datetime-local" id="endDate" autoComplete="off"
+                           value={this.convertEndDateToDateTimeLocal(this.state.payload.endDate)}
+                           className="form-control" placeholder="Project End Date"
                            required onChange={this.onChangeHandler}/>
                   </div>
                   <div className="form-group">
