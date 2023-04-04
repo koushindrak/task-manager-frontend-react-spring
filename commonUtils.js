@@ -7,7 +7,7 @@ export function GetHeaders() {
     }
   };
   if (localStorage.token) {
-    headers.headers["X-Authorization"] = `Bearer ${localStorage.token}`;
+    headers.headers["Authorization"] = `Bearer ${localStorage.token}`;
   }
   return headers
 }

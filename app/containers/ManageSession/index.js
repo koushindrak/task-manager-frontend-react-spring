@@ -34,7 +34,8 @@ export class ManageSession extends React.Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     if (nextProps.loginSuccess !== this.props.loginSuccess) {
-      localStorage.token = nextProps.loginSuccess;
+      console.log("nextProps.loginSuccess",nextProps.loginSuccess)
+      localStorage.token = nextProps.loginSuccess.token;
       this.props.history.push('/');
     }
     if(nextProps.loginFailure !== this.props.loginFailure){

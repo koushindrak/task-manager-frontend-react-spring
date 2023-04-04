@@ -13,7 +13,7 @@ export const apiTypes={
 }
 export const apis= {
   /*BASE APIS*/
-   USER_APIS_BASE_URL: "api/v1/user",
+   USER_APIS_BASE_URL: "api/v1/users/kk",
    ROLE_APIS_BASE_URL: "api/v1/role",
    VEHICLE_APIS_BASE_URL: "api/v1/vehicle",
    REVENUE_APIS_BASE_URL: "api/v1/revenue",
@@ -27,6 +27,7 @@ export const apis= {
 
 export function* apiCallHandler(action, responseConst, errorConst, apiUrlConstant,type,isBaseUrl=true, isLoading = true) {
   try {
+    console.log("inside apiCallHandler calling api----",apiUrlConstant)
     yield [apiTryBlockHandler(action, responseConst, apiUrlConstant,type,isBaseUrl, isLoading)];
   } catch (error) {
     yield [COMMON_UTILS.ErrorCheck(action, error, errorConst)];
@@ -37,7 +38,9 @@ export function* apiCallHandler(action, responseConst, errorConst, apiUrlConstan
 
 function* apiTryBlockHandler(action,responseConst,apiUrlConstant,type,isBaseUrl,isLoading) {
   console.log('isBaseUrl: ', isBaseUrl);
-  let url = window.URL + apiUrlConstant+"/";
+  // let url = window.URL + apiUrlConstant+"/";  //COMMENTED
+   let url = window.URL + apiUrlConstant;
+
   let method=axios.get;
   let urlAndMethod=setUrlAndMethod(type, url, action, method);
   console.log('urlAndMethod: ', urlAndMethod);
