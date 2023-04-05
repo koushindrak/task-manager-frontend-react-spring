@@ -138,7 +138,8 @@ export class ManageVehicles extends React.Component {
 
     }
     if(commonUtils.compare(nextProps.createVehicleFailure,this.props.createVehicleFailure)){
-      this.manageNotificationModal(true, nextProps.createVehicleFailure.error, "danger")
+      this.manageNotificationModal(
+        true, nextProps.createVehicleFailure.error, "danger")
     }
   }
 
