@@ -290,7 +290,7 @@ export class ManageVehicles extends React.Component {
                 <div className="customModal-header">
                   <span className="close mr-r-10" onClick={() => $('#myModal').css({ display: "none" })}>&times;</span>
                   <button className="close">&#10003;</button>
-                  {this.state.isEditVehicle ? <p>Edit Vehicle</p> : <p> Add Vehicle</p>}
+                  {this.state.isEditVehicle ? <p>Edit Project</p> : <p> Add Project</p>}
                 </div>
                 <div className="customModal-body">
 
