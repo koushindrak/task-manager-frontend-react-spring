@@ -60,7 +60,7 @@ function* apiTryBlockHandler(action,responseConst,apiUrlConstant,type,isBaseUrl,
 
     switch (apiName) {
       case "LOGIN": {
-        const response = yield call(axios.post, "http://localhost:2612/api/v1/auth/signin", action.payload);
+        const response = yield call(axios.post, window.URL+"api/v1/auth/signin", action.payload);
         yield put({type: responseConst, response: response.data.data})
         break;
       }
@@ -77,6 +77,7 @@ function* apiTryBlockHandler(action,responseConst,apiUrlConstant,type,isBaseUrl,
 }
 
 function setUrlAndMethod(type, url, action, method) {
+  console.log(`setUrlAndMethod--type ${type} \n url ${url}, \n action ${action}, \n method ${method}`)
   switch (type) {
     case apiTypes.GET_ALL:
       break;
