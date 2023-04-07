@@ -96,6 +96,7 @@ export default class HomePage extends React.PureComponent {
           </div>
 
         </div>
+        /* SIDE NAVE */
         <div className="sideNav" id="sideNav">
           <div className="menuNavigationSlideWrapper" id="menuNavigationSlideWrapper">
             <div className="vpsLogo">
@@ -113,7 +114,7 @@ export default class HomePage extends React.PureComponent {
                 </li>
 
                 <li data-value className={window.location.pathname === "/tasks" ? "active" : ""}>
-                  <Link to='/tasks' >
+                  <Link to='/' >
                     <a >
                       Manage Tasks
                   </a>
@@ -140,6 +141,8 @@ export default class HomePage extends React.PureComponent {
             </div>
           </div>
         </div>
+        /* SIDE NAVE */
+
         <div className="contentBox">
           <Switch>
             {this.state.routes.map((route, routeIndex) => {
