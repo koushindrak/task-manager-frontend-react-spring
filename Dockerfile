@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 # Replace shell with bash so we can source files
 RUN apt-get update \
     && apt-get install -y curl vim net-tools iputils-ping \
@@ -10,5 +10,7 @@ WORKDIR /SETUP
 COPY ./package.json ./
 RUN npm install --ignore-scripts
 COPY ./ ./
+RUN npm run build:dll
+
 EXPOSE 3000
 CMD ["npm", "run", "start"]
