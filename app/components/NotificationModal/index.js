@@ -35,11 +35,11 @@ class NotificationModal extends React.Component {
     notificationId: ''
   }
   componentDidMount() {
-    console.log("Notification Modal-----",this.props)
+    console.log("Notification Modal-----",this.props.message)
     let timeOutTime = 10000;
     store.addNotification({
       title: "",
-      message: this.props.type === "success" ? "Request Completed SuccessFully" : "Something Went wrong, Please Try again after some time...",
+      message: this.props.message,
       type: this.props.type === "success" ? "success" : "danger",
       insert: "top",
       container: this.props.type === "success" ? "top-right" : "top-right",

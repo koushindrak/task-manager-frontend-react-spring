@@ -33,7 +33,7 @@ const defaultButton = props => (
 )
 const statusColumn = {
   Header: 'Status',
-  accessor: 'taskStatus',
+  accessor: 'status',
   filterable: true,
   filterMethod: (filter, row) => {
     const value = row[filter.id] ?  row[filter.id].toLowerCase() : ""; // Convert data value to lowercase
@@ -78,9 +78,18 @@ const getStatusColor = (status) => {
 };
 
 let payload = {
-  hours: '',
-  amount: '',
-  vehicleType: '',
+  id: '',
+  name: '',
+  description: "",
+  dueDate: Date.now() + 24*60*60*1000,
+  status:'TODO',
+  labels: '',
+  // "comments": null,
+  priority: "MEDIUM",
+  // "groupId": null,
+  groupName: '',
+  // "projectId": null,
+  projectName: ''
 }
 export class ManageTasks extends React.Component {
   state = {
@@ -201,11 +210,13 @@ export class ManageTasks extends React.Component {
   createTaskListener(nextProps) {
     if(commonUtils.compare(nextProps.createTaskSuccess,this.props.createTaskSuccess)){
       this.props.getAllTasks()
-      this.manageNotificationModal(true, nextProps.createTaskSuccess.message, "success")
+      console.log("nextProps.createTaskSuccess----",nextProps.createTaskSuccess)
+      this.manageNotificationModal(true, nextProps.createTaskSuccess.displayMessage, "success")
       $('#myModal').css({display: "none"})
 
     }
     if(commonUtils.compare(nextProps.createTaskFailure,this.props.createTaskFailure)){
+      console.log("this.props.createTaskFailure---",nextProps.createTaskFailure)
       this.manageNotificationModal(true, nextProps.createTaskFailure.error, "danger")
     }
   }
@@ -238,7 +249,7 @@ export class ManageTasks extends React.Component {
   updateTaskListener(nextProps) {
     if(commonUtils.compare(nextProps.updateTaskSuccess,this.props.updateTaskSuccess)){
       this.props.getAllTasks()
-      this.manageNotificationModal(true, nextProps.updateTaskSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.updateTaskSuccess.displayMessage, "success")
       $('#myModal').css({display: "none"})
 
     }
@@ -272,8 +283,11 @@ export class ManageTasks extends React.Component {
     let payload = this.state.payload;
     if(this.state.isEditTask){
       payload.id=this.state.selectedTaskId;
+      payload.dueDate =  Date.parse(payload.dueDate)
       this.props.updateTask(payload);
     }else {
+      console.log("dueDate---",payload.dueDate)
+      payload.dueDate =  Date.parse(payload.dueDate)
       this.props.createTask(payload);
     }
   }
@@ -287,6 +301,21 @@ export class ManageTasks extends React.Component {
     let payload = { ...this.state.payload }
     payload[event.currentTarget.id] = event.currentTarget.value;
     this.setState({ payload })
+  }
+  convertDueDateToDateTimeLocal = event => {
+    const milliseconds =this.state.payload.dueDate; // Example milliseconds value
+    return this.getDateTimeLocal(milliseconds);
+  }
+
+  getDateTimeLocal(milliseconds) {
+    const date = new Date(milliseconds);
+    const year = date.getFullYear();
+    const month = `${date.getMonth() + 1}`.padStart(2, '0');
+    const day = `${date.getDate()}`.padStart(2, '0');
+    const hours = `${date.getHours()}`.padStart(2, '0');
+    const minutes = `${date.getMinutes()}`.padStart(2, '0');
+    const datetimeLocal = `${year}-${month}-${day}T${hours}:${minutes}`;
+    return datetimeLocal
   }
   render() {
     return (
@@ -329,27 +358,43 @@ export class ManageTasks extends React.Component {
                 <div className="customModal-body">
 
                   <div className="form-group">
-                    <label form="hours"> Hours : </label>
-                    <select name="hours" id="hours" value={this.state.payload.hours} required onChange={this.onChangeHandler}>
-                      <option key="LESS_THAN_2_HOURS" value="LESS_THAN_2_HOURS">Less than 2 hours</option>)
-                      <option key="LESS_THAN_12_HOURS" value="LESS_THAN_12_HOURS">Less than 12 hours</option>)
-                      <option key="GREATER_THAN_12_HOURS" value="GREATER_THAN_12_HOURS">Greater than 12 hours</option>)
-                      </select>
+                    <label htmlFor="name">Task Name :</label>
+                    <input type="text" id="name" autoComplete="on" value={this.state.payload.name}
+                           className="form-control" placeholder="Task Name" required onChange={this.onChangeHandler}/>
                   </div>
 
                   <div className="form-group">
-                    <label for="amount">Amount :</label>
-                    <input type="text" id="amount" autoComplete="off" value={this.state.payload.amount} className="form-control" placeholder="Amount" required onChange={this.onChangeHandler} />
+                    <label htmlFor="description">Description :</label>
+                    <input type="text" id="description" autoComplete="on" value={this.state.payload.description}
+                           className="form-control" placeholder="Task Description :"  onChange={this.onChangeHandler}/>
+                  </div>
+
+
+                  <div className="form-group">
+                    <label htmlFor="dueDate">Task Due Date :</label>
+                    <input type="datetime-local" id="dueDate" autoComplete="off"
+                           value={this.convertDueDateToDateTimeLocal(this.state.payload.dueDate)}
+                           className="form-control" placeholder="Task Due Date"
+                           required onChange={this.onChangeHandler}/>
                   </div>
 
                   <div className="form-group">
-                    <label form="vehicleType"> Project Type : </label>
-                    <select name="vehicleType" id="vehicleType" value={this.state.payload.vehicleType} required onChange={this.onChangeHandler}>
-                      <option key="CAR" value="CAR">Car</option>)
-                      <option key="BIKE" value="BIKE">Bike</option>)
-                      <option key="BICYCLE" value="BICYCLE">Bicycle</option>)
+                    <label form="status"> Task Status : </label>
+                    <select name="status" id="status" value={this.state.payload.status} required onChange={this.onChangeHandler}>
+                      <option key="TODO" value="TODO">TODO</option>)
+                      <option key="INPROGRESS" value="INPROGRESS">IN PROGRESS</option>)
+                      <option key="DONE" value="DONE">DONE</option>)
                     </select>
                   </div>
+                  <div className="form-group">
+                    <label form="priority"> Task Priority : </label>
+                    <select name="priority" id="priority" value={this.state.payload.priority} required onChange={this.onChangeHandler}>
+                      <option key="HIGH" value="HIGH">HIGH</option>)
+                      <option key="MEDIUM" value="MEDIUM">MEDIUM</option>)
+                      <option key="LOW" value="LOW">LOW</option>)
+                    </select>
+                  </div>
+
                 </div>
               </div>
             </form>
