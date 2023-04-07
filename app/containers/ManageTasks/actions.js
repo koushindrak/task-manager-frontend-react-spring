@@ -13,7 +13,7 @@ export function createTask(payload) {
   }
 }
 
-export function getTasks() {
+export function getAllTasks() {
   return{
     type: CONSTANTS.GET_TASKS
   }

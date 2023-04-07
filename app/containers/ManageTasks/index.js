@@ -24,6 +24,8 @@ import {faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import NotificationModal from '../../components/NotificationModal/Loadable'
 import * as commonUtils from '../../../commonUtils'
 
+
+
 const defaultButton = props => (
   <button type="button" {...props} >
     {props.children}
@@ -51,13 +53,13 @@ export class ManageTasks extends React.Component {
   }
   componentDidMount() {
     console.log("this.props--",this.props)
-    // this.props.getTasks();
+    this.props.getAllTasks();
   }
 
   columns = [
     {
       Header: 'Name',
-      accessor:'Name',
+      accessor:'name',
       filterable: true,
       style: { textAlign: "center" }
     },
@@ -69,13 +71,7 @@ export class ManageTasks extends React.Component {
     },
     {
       Header: 'Due Date',
-      accessor: 'dueDate',
-      filterable: false,
-      style: { textAlign: "center" },
-    },
-    {
-      Header: 'Created At',
-      Cell: row => (<span>{new Date(row.original.createdAt).toLocaleString('en-US')}</span>),
+      Cell: row => (<span>{new Date(row.original.dueDate).toLocaleString('en-US')}</span>),
       filterable: false,
       style: { textAlign: "center" },
     },
@@ -93,7 +89,11 @@ export class ManageTasks extends React.Component {
     },
     {
       Header: 'Labels',
-      Cell: row => (<span>{row.original.labels.toString()}</span>),
+      Cell: row => (
+        <span>
+      {row.original.labels.map(label => label.labelName).join(', ')}
+    </span>
+      ),
       filterable: true,
       style: { textAlign: "center" },
     },
@@ -104,7 +104,7 @@ export class ManageTasks extends React.Component {
           <div>
             <button data-tip data-for={"edit" + row.original.id} onClick={()=>{
               this.setState({ selectedTaskId: row.original.id, addOrEditIsFetching: true, isEditTask:true });
-              this.props.getTasksById(row.original.id)
+              this.props.getAllTasksById(row.original.id)
             }}>
               <FontAwesomeIcon icon={faPen} />
             </button>
@@ -130,15 +130,15 @@ export class ManageTasks extends React.Component {
 
   componentWillReceiveProps(nextProps, nextContext) {
     this.createTaskListener(nextProps);
-    this.getTasksListener(nextProps);
-    this.getTasksByIdListener(nextProps);
+    this.getAllTasksListener(nextProps);
+    this.getAllTasksByIdListener(nextProps);
     this.updateTaskListener(nextProps);
     this.deleteTaskListener(nextProps);
   }
 
   createTaskListener(nextProps) {
     if(commonUtils.compare(nextProps.createTaskSuccess,this.props.createTaskSuccess)){
-      this.props.getTasks()
+      this.props.getAllTasks()
       this.manageNotificationModal(true, nextProps.createTaskSuccess.message, "success")
       $('#myModal').css({display: "none"})
 
@@ -148,34 +148,34 @@ export class ManageTasks extends React.Component {
     }
   }
 
-  getTasksListener(nextProps) {
-    if(commonUtils.compare(nextProps.getTasksSuccess,this.props.getTasksSuccess)){
-      this.setState({tasks: nextProps.getTasksSuccess.data})
+  getAllTasksListener(nextProps) {
+    if(commonUtils.compare(nextProps.getAllTasksSuccess,this.props.getAllTasksSuccess)){
+      this.setState({tasks: nextProps.getAllTasksSuccess.data})
     }
-    if(commonUtils.compare(nextProps.getTasksFailure,this.props.getTasksFailure)){
-      this.manageNotificationModal(true, nextProps.getTasksFailure.error, "danger")
+    if(commonUtils.compare(nextProps.getAllTasksFailure,this.props.getAllTasksFailure)){
+      this.manageNotificationModal(true, nextProps.getAllTasksFailure.error, "danger")
     }
   }
 
-  getTasksByIdListener(nextProps){
-    if(commonUtils.compare(nextProps.getTasksByIdSuccess,this.props.getTasksByIdSuccess)){
-      this.setState({selectedTaskData: nextProps.getTasksByIdSuccess.data},()=>{
+  getAllTasksByIdListener(nextProps){
+    if(commonUtils.compare(nextProps.getAllTasksByIdSuccess,this.props.getAllTasksByIdSuccess)){
+      this.setState({selectedTaskData: nextProps.getAllTasksByIdSuccess.data},()=>{
         if(this.state.isEditTask){
 
-          this.setState({payload:nextProps.getTasksByIdSuccess.data},()=>{
+          this.setState({payload:nextProps.getAllTasksByIdSuccess.data},()=>{
             $('#myModal').css({ display: "block" })
           })
         }
       })
     }
-    if(commonUtils.compare(nextProps.getTasksByIdFailure,this.props.getTasksByIdFailure)){
-      this.manageNotificationModal(true, nextProps.getTasksByIdFailure.error, "danger")
+    if(commonUtils.compare(nextProps.getAllTasksByIdFailure,this.props.getAllTasksByIdFailure)){
+      this.manageNotificationModal(true, nextProps.getAllTasksByIdFailure.error, "danger")
     }
   }
 
   updateTaskListener(nextProps) {
     if(commonUtils.compare(nextProps.updateTaskSuccess,this.props.updateTaskSuccess)){
-      this.props.getTasks()
+      this.props.getAllTasks()
       this.manageNotificationModal(true, nextProps.updateTaskSuccess.message, "success")
       $('#myModal').css({display: "none"})
 
@@ -187,7 +187,7 @@ export class ManageTasks extends React.Component {
 
   deleteTaskListener(nextProps) {
     if(commonUtils.compare(nextProps.deleteTaskSuccess,this.props.deleteTaskSuccess)){
-      this.props.getTasks()
+      this.props.getAllTasks()
       this.manageNotificationModal(true, nextProps.deleteTaskSuccess.message, "success")
     }
     if(commonUtils.compare(nextProps.deleteTaskFailure,this.props.deleteTaskFailure)){
@@ -200,7 +200,7 @@ export class ManageTasks extends React.Component {
   }
 
   addOnClickHandler = event => {
-    this.props.getTasks();
+    this.props.getAllTasks();
     $('#myModal').css({ display: "block" })
     this.setState({ modal: true, payload })
   }
@@ -314,11 +314,11 @@ const mapStateToProps = createStructuredSelector({
   createTaskSuccess: SELECTORS.createTaskSuccess(),
   createTaskFailure: SELECTORS.createTaskFailure(),
 
-  getTasksSuccess: SELECTORS.getTaskSuccess(),
-  getTasksFailure: SELECTORS.getTaskFailure(),
+  getAllTasksSuccess: SELECTORS.getTaskSuccess(),
+  getAllTasksFailure: SELECTORS.getTaskFailure(),
 
-  getTasksByIdSuccess: SELECTORS.getTaskByIdSuccess(),
-  getTasksByIdFailure: SELECTORS.getTaskByIdFailure(),
+  getAllTasksByIdSuccess: SELECTORS.getTaskByIdSuccess(),
+  getAllTasksByIdFailure: SELECTORS.getTaskByIdFailure(),
 
   updateTaskSuccess: SELECTORS.updateTaskSuccess(),
   updateTaskFailure: SELECTORS.updateTaskFailure(),
@@ -331,8 +331,8 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     createTask : payload => dispatch(ACTIONS.createTask(payload)),
-    getTasks: () => dispatch(ACTIONS.getTasks()),
-    getTasksById: id => dispatch(ACTIONS.getTaskById(id)),
+    getAllTasks: () => dispatch(ACTIONS.getAllTasks()),
+    getAllTasksById: id => dispatch(ACTIONS.getTaskById(id)),
     updateTask: (payload) => dispatch(ACTIONS.updateTask(payload)),
     deleteTask: id => dispatch(ACTIONS.deleteTask(id))
   };
