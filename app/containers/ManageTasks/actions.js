@@ -6,33 +6,33 @@
 
 import * as CONSTANTS from './constants';
 
-export function createRevenue(payload) {
+export function createTask(payload) {
   return {
-    type: CONSTANTS.CREATE_REVENUE,
+    type: CONSTANTS.CREATE_TASK,
     payload
   }
 }
 
-export function getRevenues() {
+export function getTasks() {
   return{
-    type: CONSTANTS.GET_REVENUES
+    type: CONSTANTS.GET_TASKS
   }
 }
-export function getRevenueById(id) {
+export function getTaskById(id) {
   return {
-    type: CONSTANTS.GET_REVENUE_BY_ID,
+    type: CONSTANTS.GET_TASK_BY_ID,
     id
   }
 }
-export function updateRevenue(payload) {
+export function updateTask(payload) {
   return {
-    type: CONSTANTS.UPDATE_REVENUE,
+    type: CONSTANTS.UPDATE_TASK,
     payload
   }
 }
-export function deleteRevenue(id) {
+export function deleteTask(id) {
   return {
-    type: CONSTANTS.DELETE_REVENUE,
+    type: CONSTANTS.DELETE_TASK,
     id
   }
 }

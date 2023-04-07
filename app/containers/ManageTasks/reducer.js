@@ -10,35 +10,35 @@ export const initialState = fromJS({});
 import * as CONSTANTS from './constants'
 function manageTasksReducer(state = initialState, action) {
   switch (action.type) {
-    case CONSTANTS.CREATE_REVENUE_SUCCESS:
-      return Object.assign({},state,{createRevenueResponse:action.response})
+    case CONSTANTS.CREATE_TASK_SUCCESS:
+      return Object.assign({},state,{createTaskResponse:action.response})
 
-    case CONSTANTS.CREATE_REVENUE_FAILURE:
-      return Object.assign({},state, {createRevenueError:{error:action.error,errorTime:new Date()}})
+    case CONSTANTS.CREATE_TASK_FAILURE:
+      return Object.assign({},state, {createTaskError:{error:action.error,errorTime:new Date()}})
 
-    case CONSTANTS.GET_REVENUES_SUCCESS:
-      return Object.assign({},state,{getRevenueResponse:action.response})
+    case CONSTANTS.GET_TASKS_SUCCESS:
+      return Object.assign({},state,{getTaskResponse:action.response})
 
-    case CONSTANTS.GET_REVENUES_FAILURE:
-      return Object.assign({},state, {getRevenueError:{error:action.error,errorTime:new Date()}})
+    case CONSTANTS.GET_TASKS_FAILURE:
+      return Object.assign({},state, {getTaskError:{error:action.error,errorTime:new Date()}})
 
-    case CONSTANTS.GET_REVENUE_BY_ID_SUCCESS:
-      return Object.assign({},state,{getRevenueByIdResponse:action.response})
+    case CONSTANTS.GET_TASK_BY_ID_SUCCESS:
+      return Object.assign({},state,{getTaskByIdResponse:action.response})
 
-    case CONSTANTS.GET_REVENUE_BY_ID_FAILURE:
-      return Object.assign({},state, {getRevenueByIdError:{error:action.error,errorTime:new Date()}})
+    case CONSTANTS.GET_TASK_BY_ID_FAILURE:
+      return Object.assign({},state, {getTaskByIdError:{error:action.error,errorTime:new Date()}})
 
-    case CONSTANTS.UPDATE_REVENUE_SUCCESS:
-      return Object.assign({},state,{updateRevenueResponse:action.response})
+    case CONSTANTS.UPDATE_TASK_SUCCESS:
+      return Object.assign({},state,{updateTaskResponse:action.response})
 
-    case CONSTANTS.UPDATE_REVENUE_FAILURE:
-      return Object.assign({},state, {updateRevenueError:{error:action.error,errorTime:new Date()}})
+    case CONSTANTS.UPDATE_TASK_FAILURE:
+      return Object.assign({},state, {updateTaskError:{error:action.error,errorTime:new Date()}})
 
-    case CONSTANTS.DELETE_REVENUE_SUCCESS:
-      return Object.assign({},state,{deleteRevenueResponse:action.response})
+    case CONSTANTS.DELETE_TASK_SUCCESS:
+      return Object.assign({},state,{deleteTaskResponse:action.response})
 
-    case CONSTANTS.DELETE_REVENUE_FAILURE:
-      return Object.assign({},state, {deleteRevenueError:{error:action.error,errorTime:new Date()}})
+    case CONSTANTS.DELETE_TASK_FAILURE:
+      return Object.assign({},state, {deleteTaskError:{error:action.error,errorTime:new Date()}})
 
     default:
       return state;

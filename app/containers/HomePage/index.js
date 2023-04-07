@@ -14,6 +14,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { Switch, Route, Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
+import {ManageTasks} from "../ManageTasks";
 
 let allContainers = ["ManageUsers", "ManageTasks", "ParkingAreas", "ManageProjects", "AddOrEditParkingArea", "Dashboard"]
 
@@ -55,7 +56,7 @@ export default class HomePage extends React.PureComponent {
   state = {
     routes: [
       { "path": "/users", "component": ManageUsers },
-      { "path": "/tasks", "component": ParkingAreas },
+      { "path": "/tasks", "component": ManageTasks },
       { "path": "/projects", "component": ManageProjects },
       // { "path": "/addOrEditParkingArea/:id?", "component": AddOrEditParkingArea },
       { "path": "/", "component": Dashboard }

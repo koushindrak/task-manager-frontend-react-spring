@@ -36,44 +36,65 @@ let payload = {
 }
 export class ManageTasks extends React.Component {
   state = {
-    revenues: [],
+    tasks: [],
     payload: payload,
-    selectedRevenueId: '',
-    selectedRevenueData: {},
-    isEditRevenue: false,
-    isAddRevenue: false,
+    selectedTaskId: '',
+    selectedTaskData: {},
+    isEditTask: false,
+    isAddTask: false,
     openNotificationModal: false,
     type: '',
     message: '',
     modal: false
+
+
   }
   componentDidMount() {
-    this.props.getRevenues();
+    console.log("this.props--",this.props)
+    // this.props.getTasks();
   }
 
   columns = [
     {
-      Header: 'Hours',
-      accessor:'hours',
+      Header: 'Name',
+      accessor:'Name',
       filterable: true,
       style: { textAlign: "center" }
     },
     {
-      Header: 'Amount',
-      accessor: 'amount',
+      Header: 'Description',
+      accessor: 'description',
       filterable: true,
       style: { textAlign: "center" }
     },
     {
-      Header: 'Project Type',
-      accessor: 'vehicleType',
+      Header: 'Due Date',
+      accessor: 'dueDate',
+      filterable: false,
+      style: { textAlign: "center" },
+    },
+    {
+      Header: 'Created At',
+      Cell: row => (<span>{new Date(row.original.createdAt).toLocaleString('en-US')}</span>),
+      filterable: false,
+      style: { textAlign: "center" },
+    },
+    {
+      Header: 'Group Name',
+      accessor: 'groupName',
       filterable: true,
       style: { textAlign: "center" },
     },
     {
-      Header: 'Create At',
-      Cell: row => (<span>{new Date(row.original.createdAt).toLocaleString('en-US')}</span>),
-      filterable: false,
+      Header: 'Project Name',
+      accessor: 'projectName',
+      filterable: true,
+      style: { textAlign: "center" },
+    },
+    {
+      Header: 'Labels',
+      Cell: row => (<span>{row.original.labels.toString()}</span>),
+      filterable: true,
       style: { textAlign: "center" },
     },
     {
@@ -82,8 +103,8 @@ export class ManageTasks extends React.Component {
         return (
           <div>
             <button data-tip data-for={"edit" + row.original.id} onClick={()=>{
-              this.setState({ selectedRevenueId: row.original.id, addOrEditIsFetching: true, isEditRevenue:true });
-              this.props.getRevenuesById(row.original.id)
+              this.setState({ selectedTaskId: row.original.id, addOrEditIsFetching: true, isEditTask:true });
+              this.props.getTasksById(row.original.id)
             }}>
               <FontAwesomeIcon icon={faPen} />
             </button>
@@ -92,8 +113,8 @@ export class ManageTasks extends React.Component {
             </ReactTooltip>
 
             <button data-tip data-for={"delete" + row.original.id} onClick={() => {
-              this.setState({ selectedRevenueId: row.original.id });
-              this.props.deleteRevenue(row.original.id)
+              this.setState({ selectedTaskId: row.original.id });
+              this.props.deleteTask(row.original.id)
             }}>
               <FontAwesomeIcon icon={faTrash} />
             </button>
@@ -108,69 +129,69 @@ export class ManageTasks extends React.Component {
 
 
   componentWillReceiveProps(nextProps, nextContext) {
-    this.createRevenueListener(nextProps);
-    this.getRevenuesListener(nextProps);
-    this.getRevenuesByIdListener(nextProps);
-    this.updateRevenueListener(nextProps);
-    this.deleteRevenueListener(nextProps);
+    this.createTaskListener(nextProps);
+    this.getTasksListener(nextProps);
+    this.getTasksByIdListener(nextProps);
+    this.updateTaskListener(nextProps);
+    this.deleteTaskListener(nextProps);
   }
 
-  createRevenueListener(nextProps) {
-    if(commonUtils.compare(nextProps.createRevenueSuccess,this.props.createRevenueSuccess)){
-      this.props.getRevenues()
-      this.manageNotificationModal(true, nextProps.createRevenueSuccess.message, "success")
+  createTaskListener(nextProps) {
+    if(commonUtils.compare(nextProps.createTaskSuccess,this.props.createTaskSuccess)){
+      this.props.getTasks()
+      this.manageNotificationModal(true, nextProps.createTaskSuccess.message, "success")
       $('#myModal').css({display: "none"})
 
     }
-    if(commonUtils.compare(nextProps.createRevenueFailure,this.props.createRevenueFailure)){
-      this.manageNotificationModal(true, nextProps.createRevenueFailure.error, "danger")
+    if(commonUtils.compare(nextProps.createTaskFailure,this.props.createTaskFailure)){
+      this.manageNotificationModal(true, nextProps.createTaskFailure.error, "danger")
     }
   }
 
-  getRevenuesListener(nextProps) {
-    if(commonUtils.compare(nextProps.getRevenuesSuccess,this.props.getRevenuesSuccess)){
-      this.setState({revenues: nextProps.getRevenuesSuccess.data})
+  getTasksListener(nextProps) {
+    if(commonUtils.compare(nextProps.getTasksSuccess,this.props.getTasksSuccess)){
+      this.setState({tasks: nextProps.getTasksSuccess.data})
     }
-    if(commonUtils.compare(nextProps.getRevenuesFailure,this.props.getRevenuesFailure)){
-      this.manageNotificationModal(true, nextProps.getRevenuesFailure.error, "danger")
+    if(commonUtils.compare(nextProps.getTasksFailure,this.props.getTasksFailure)){
+      this.manageNotificationModal(true, nextProps.getTasksFailure.error, "danger")
     }
   }
 
-  getRevenuesByIdListener(nextProps){
-    if(commonUtils.compare(nextProps.getRevenuesByIdSuccess,this.props.getRevenuesByIdSuccess)){
-      this.setState({selectedRevenueData: nextProps.getRevenuesByIdSuccess.data},()=>{
-        if(this.state.isEditRevenue){
+  getTasksByIdListener(nextProps){
+    if(commonUtils.compare(nextProps.getTasksByIdSuccess,this.props.getTasksByIdSuccess)){
+      this.setState({selectedTaskData: nextProps.getTasksByIdSuccess.data},()=>{
+        if(this.state.isEditTask){
 
-          this.setState({payload:nextProps.getRevenuesByIdSuccess.data},()=>{
+          this.setState({payload:nextProps.getTasksByIdSuccess.data},()=>{
             $('#myModal').css({ display: "block" })
           })
         }
       })
     }
-    if(commonUtils.compare(nextProps.getRevenuesByIdFailure,this.props.getRevenuesByIdFailure)){
-      this.manageNotificationModal(true, nextProps.getRevenuesByIdFailure.error, "danger")
+    if(commonUtils.compare(nextProps.getTasksByIdFailure,this.props.getTasksByIdFailure)){
+      this.manageNotificationModal(true, nextProps.getTasksByIdFailure.error, "danger")
     }
   }
 
-  updateRevenueListener(nextProps) {
-    if(commonUtils.compare(nextProps.updateRevenueSuccess,this.props.updateRevenueSuccess)){
-      this.props.getRevenues()
-      this.manageNotificationModal(true, nextProps.updateRevenueSuccess.message, "success")
+  updateTaskListener(nextProps) {
+    if(commonUtils.compare(nextProps.updateTaskSuccess,this.props.updateTaskSuccess)){
+      this.props.getTasks()
+      this.manageNotificationModal(true, nextProps.updateTaskSuccess.message, "success")
       $('#myModal').css({display: "none"})
 
     }
-    if(commonUtils.compare(nextProps.updateRevenueFailure,this.props.updateRevenueFailure)){
-      this.manageNotificationModal(true, nextProps.updateRevenueFailure.error, "danger")
+    if(commonUtils.compare(nextProps.updateTaskFailure,this.props.updateTaskFailure)){
+      this.manageNotificationModal(true, nextProps.updateTaskFailure.error, "danger")
     }
   }
 
-  deleteRevenueListener(nextProps) {
-    if(commonUtils.compare(nextProps.deleteRevenueSuccess,this.props.deleteRevenueSuccess)){
-      this.props.getRevenues()
-      this.manageNotificationModal(true, nextProps.deleteRevenueSuccess.message, "success")
+  deleteTaskListener(nextProps) {
+    if(commonUtils.compare(nextProps.deleteTaskSuccess,this.props.deleteTaskSuccess)){
+      this.props.getTasks()
+      this.manageNotificationModal(true, nextProps.deleteTaskSuccess.message, "success")
     }
-    if(commonUtils.compare(nextProps.deleteRevenueFailure,this.props.deleteRevenueFailure)){
-      this.manageNotificationModal(true, nextProps.deleteRevenueFailure.error, "danger")
+    if(commonUtils.compare(nextProps.deleteTaskFailure,this.props.deleteTaskFailure)){
+      this.manageNotificationModal(true, nextProps.deleteTaskFailure.error, "danger")
     }
   }
 
@@ -179,7 +200,7 @@ export class ManageTasks extends React.Component {
   }
 
   addOnClickHandler = event => {
-    this.props.getRevenues();
+    this.props.getTasks();
     $('#myModal').css({ display: "block" })
     this.setState({ modal: true, payload })
   }
@@ -187,11 +208,11 @@ export class ManageTasks extends React.Component {
   addOrEditSubmitHandler = event => {
     event.preventDefault();
     let payload = this.state.payload;
-    if(this.state.isEditRevenue){
-      payload.id=this.state.selectedRevenueId;
-      this.props.updateRevenue(payload);
+    if(this.state.isEditTask){
+      payload.id=this.state.selectedTaskId;
+      this.props.updateTask(payload);
     }else {
-      this.props.createRevenue(payload);
+      this.props.createTask(payload);
     }
   }
   onCloseHandler = (index) => {
@@ -213,7 +234,7 @@ export class ManageTasks extends React.Component {
             <div className="row">
               <div className="col-8">
 
-                <p><span>Manage Revenues</span></p>
+                <p><span>Manage Tasks</span></p>
               </div>
               <div className="col-4">
                 <button className="addButton"
@@ -225,7 +246,7 @@ export class ManageTasks extends React.Component {
           </div>
           <div className="contentContainer">
             <ReactTable
-              data={this.state.revenues}
+              data={this.state.tasks}
               columns={this.columns}
               defaultPageSize={10}
               noDataText={"No Data Found"}
@@ -241,7 +262,7 @@ export class ManageTasks extends React.Component {
                 <div className="customModal-header">
                   <span className="close mr-r-10" onClick={() => $('#myModal').css({ display: "none" })}>&times;</span>
                   <button className="close">&#10003;</button>
-                  {this.state.isEditRevenue ? <p>Edit Revenue</p> : <p> Add Revenue</p>}
+                  {this.state.isEditTask ? <p>Edit Task</p> : <p> Add Task</p>}
                 </div>
                 <div className="customModal-body">
 
@@ -290,30 +311,30 @@ ManageTasks.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  createRevenueSuccess: SELECTORS.createRevenueSuccess(),
-  createRevenueFailure: SELECTORS.createRevenueFailure(),
+  createTaskSuccess: SELECTORS.createTaskSuccess(),
+  createTaskFailure: SELECTORS.createTaskFailure(),
 
-  getRevenuesSuccess: SELECTORS.getRevenueSuccess(),
-  getRevenuesFailure: SELECTORS.getRevenueFailure(),
+  getTasksSuccess: SELECTORS.getTaskSuccess(),
+  getTasksFailure: SELECTORS.getTaskFailure(),
 
-  getRevenuesByIdSuccess: SELECTORS.getRevenueByIdSuccess(),
-  getRevenuesByIdFailure: SELECTORS.getRevenueByIdFailure(),
+  getTasksByIdSuccess: SELECTORS.getTaskByIdSuccess(),
+  getTasksByIdFailure: SELECTORS.getTaskByIdFailure(),
 
-  updateRevenueSuccess: SELECTORS.updateRevenueSuccess(),
-  updateRevenueFailure: SELECTORS.updateRevenueFailure(),
+  updateTaskSuccess: SELECTORS.updateTaskSuccess(),
+  updateTaskFailure: SELECTORS.updateTaskFailure(),
 
-  deleteRevenueSuccess: SELECTORS.deleteRevenueSuccess(),
-  deleteRevenueFailure: SELECTORS.deleteRevenueFailure()
+  deleteTaskSuccess: SELECTORS.deleteTaskSuccess(),
+  deleteTaskFailure: SELECTORS.deleteTaskFailure()
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    createRevenue : payload => dispatch(ACTIONS.createRevenue(payload)),
-    getRevenues: () => dispatch(ACTIONS.getRevenues()),
-    getRevenuesById: id => dispatch(ACTIONS.getRevenueById(id)),
-    updateRevenue: (payload) => dispatch(ACTIONS.updateRevenue(payload)),
-    deleteRevenue: id => dispatch(ACTIONS.deleteRevenue(id))
+    createTask : payload => dispatch(ACTIONS.createTask(payload)),
+    getTasks: () => dispatch(ACTIONS.getTasks()),
+    getTasksById: id => dispatch(ACTIONS.getTaskById(id)),
+    updateTask: (payload) => dispatch(ACTIONS.updateTask(payload)),
+    deleteTask: id => dispatch(ACTIONS.deleteTask(id))
   };
 }
 
