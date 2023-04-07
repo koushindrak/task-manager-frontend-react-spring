@@ -1,6 +1,6 @@
 import { take, takeEvery,call, put, select } from 'redux-saga/effects';
 import {apiCallHandler, apis, apiTypes} from "../../../apiCallHandler";
-import * as CONSTANTS from "../ManageRevenues/constants";
+import * as CONSTANTS from ".//constants";
 
 export function* handleCreateRevenueRequest(action) {
   yield [apiCallHandler(action, CONSTANTS.CREATE_REVENUE_SUCCESS, CONSTANTS.CREATE_REVENUE_FAILURE, apis.REVENUE_APIS_BASE_URL,apiTypes.CREATE)];

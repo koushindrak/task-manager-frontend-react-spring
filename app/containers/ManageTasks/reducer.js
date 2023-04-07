@@ -1,6 +1,6 @@
 /*
  *
- * ManageRevenues reducer
+ * ManageTasks reducer
  *
  */
 
@@ -8,7 +8,7 @@ import { fromJS } from 'immutable';
 
 export const initialState = fromJS({});
 import * as CONSTANTS from './constants'
-function manageRevenuesReducer(state = initialState, action) {
+function manageTasksReducer(state = initialState, action) {
   switch (action.type) {
     case CONSTANTS.CREATE_REVENUE_SUCCESS:
       return Object.assign({},state,{createRevenueResponse:action.response})
@@ -45,4 +45,4 @@ function manageRevenuesReducer(state = initialState, action) {
   }
 }
 
-export default manageRevenuesReducer;
+export default manageTasksReducer;

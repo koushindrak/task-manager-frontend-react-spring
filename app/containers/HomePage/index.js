@@ -15,7 +15,7 @@ import messages from './messages';
 import { Switch, Route, Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 
-let allContainers = ["ManageUsers", "ManageRevenues", "ParkingAreas", "ManageProjects", "AddOrEditParkingArea", "Dashboard"]
+let allContainers = ["ManageUsers", "ManageTasks", "ParkingAreas", "ManageProjects", "AddOrEditParkingArea", "Dashboard"]
 
 allContainers.map(container => {
   window[container] = require(`../${container}/Loadable`).default;

@@ -1,6 +1,6 @@
 /*
  *
- * ManageRevenues actions
+ * ManageTasks actions
  *
  */
 

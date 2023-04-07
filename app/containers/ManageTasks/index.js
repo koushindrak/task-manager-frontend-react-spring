@@ -1,6 +1,6 @@
 /**
  *
- * ManageRevenues
+ * ManageTasks
  *
  */
 
@@ -34,7 +34,7 @@ let payload = {
   amount: '',
   vehicleType: '',
 }
-export class ManageRevenues extends React.Component {
+export class ManageTasks extends React.Component {
   state = {
     revenues: [],
     payload: payload,
@@ -285,7 +285,7 @@ export class ManageRevenues extends React.Component {
   }
 }
 
-ManageRevenues.propTypes = {
+ManageTasks.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -322,11 +322,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'manageRevenues', reducer });
-const withSaga = injectSaga({ key: 'manageRevenues', saga });
+const withReducer = injectReducer({ key: 'manageTasks', reducer });
+const withSaga = injectSaga({ key: 'manageTasks', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(ManageRevenues);
+)(ManageTasks);
