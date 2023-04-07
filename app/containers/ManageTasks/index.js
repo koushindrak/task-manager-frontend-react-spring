@@ -31,6 +31,46 @@ const defaultButton = props => (
     {props.children}
   </button>
 )
+const statusColumn = {
+  Header: 'Status',
+  accessor: 'taskStatus',
+  filterable: true,
+  style: { textAlign: "center" },
+  Cell: row => (
+    <div
+      style={{
+        backgroundColor: getStatusColor(row.value),
+        padding: '10px', // Decreased padding for a sleeker look
+        borderRadius: '4px', // Added border radius for a rounded look
+        color: '#fff', // Set text color to white for better contrast
+        fontWeight: 'bold', // Increased font weight for emphasis
+        textTransform: 'capitalize', // Capitalize the text for proper case
+        transition: 'background-color 0.2s ease-in-out', // Smooth transition for color change
+        display: 'flex', // Use flexbox for centering text vertically
+        justifyContent: 'center', // Center align text horizontally
+        alignItems: 'center', // Center align text vertically
+        border: 'none',
+        boxShadow: '2px 2px 1px rgba(0,0,0,0.1)', // Added subtle box shadow for depth
+      }}
+    >
+      {row.value}
+    </div>
+  )
+};
+
+// Function to get status color based on task status
+const getStatusColor = (status) => {
+  switch (status) {
+    case 'TODO':
+      return '#e7c45b'; // Set the background color for "todo" status
+    case 'INPROGRESS':
+      return '#3d88d7'; // Set the background color for "inprogress" status
+    case 'DONE':
+      return '#28a745'; // Set the background color for "done" status
+    default:
+      return 'transparent'; // Set default background color
+  }
+};
 let payload = {
   hours: '',
   amount: '',
@@ -76,12 +116,6 @@ export class ManageTasks extends React.Component {
       style: { textAlign: "center" },
     },
     {
-      Header: 'Group Name',
-      accessor: 'groupName',
-      filterable: true,
-      style: { textAlign: "center" },
-    },
-    {
       Header: 'Project Name',
       accessor: 'projectName',
       filterable: true,
@@ -97,6 +131,7 @@ export class ManageTasks extends React.Component {
       filterable: true,
       style: { textAlign: "center" },
     },
+    statusColumn,
     {
       Header: 'Actions',
       Cell: row => {
