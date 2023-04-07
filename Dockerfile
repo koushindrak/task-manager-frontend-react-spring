@@ -10,5 +10,5 @@ WORKDIR /SETUP
 COPY ./package.json ./
 RUN npm install --ignore-scripts
 COPY ./ ./
-EXPOSE 3001
+EXPOSE 3000
 CMD ["npm", "run", "start"]
