@@ -71,6 +71,7 @@ const getStatusColor = (status) => {
       return 'transparent'; // Set default background color
   }
 };
+
 let payload = {
   hours: '',
   amount: '',
@@ -101,12 +102,22 @@ export class ManageTasks extends React.Component {
       Header: 'Name',
       accessor:'name',
       filterable: true,
+      filterMethod: (filter, row) => {
+        const value = row[filter.id] ?  row[filter.id].toLowerCase() : ""; // Convert data value to lowercase
+        const filterValue = filter.value.toLowerCase(); // Convert filter value to lowercase
+        return value.includes(filterValue); // Perform case-insensitive comparison
+      },
       style: { textAlign: "center" }
     },
     {
       Header: 'Description',
       accessor: 'description',
       filterable: true,
+      filterMethod: (filter, row) => {
+        const value = row[filter.id] ?  row[filter.id].toLowerCase() : ""; // Convert data value to lowercase
+        const filterValue = filter.value.toLowerCase(); // Convert filter value to lowercase
+        return value.includes(filterValue); // Perform case-insensitive comparison
+      },
       style: { textAlign: "center" }
     },
     {
@@ -118,19 +129,30 @@ export class ManageTasks extends React.Component {
     {
       Header: 'Project Name',
       accessor: 'projectName',
+      Filter: ({ filter, onChange }) => (
+        <input
+          type="text"
+          placeholder="Search Project name" // Placeholder text
+          value={filter ? filter.value : ''}
+          onChange={event => onChange(event.target.value)}
+          style={{ width: '100%' }} // Adjust the width as needed
+        />
+      ),
       filterable: true,
+      filterMethod: (filter, row) => {
+        const value = row[filter.id] ?  row[filter.id].toLowerCase() : ""; // Convert data value to lowercase
+        const filterValue = filter.value.toLowerCase(); // Convert filter value to lowercase
+        return value.includes(filterValue); // Perform case-insensitive comparison
+      },
       style: { textAlign: "center" },
     },
     {
       Header: 'Labels',
-      Cell: row => (
-        <span>
-      {row.original.labels.map(label => label.labelName).join(', ')}
-    </span>
-      ),
-      filterable: true,
-      style: { textAlign: "center" },
+      Cell: row => (<span>{row.original.labels.map(label => label.labelName).join(', ')}</span>),
+      filterable: false,
+      style: { textAlign: 'center' },
     },
+
     statusColumn,
     {
       Header: 'Actions',
