@@ -55,10 +55,9 @@ export default class HomePage extends React.PureComponent {
   state = {
     routes: [
       { "path": "/users", "component": ManageUsers },
-      { "path": "/tasks", "component": ManageTasks },
+      { "path": "/", "component": ManageTasks },
       { "path": "/projects", "component": ManageProjects },
       // { "path": "/addOrEditParkingArea/:id?", "component": AddOrEditParkingArea },
-      { "path": "/", "component": Dashboard }
     ],
     activeTabName: '',
   }
@@ -105,13 +104,6 @@ export default class HomePage extends React.PureComponent {
             </div>
             <div className="menuList">
               <ul id="sideNav" >
-                <li data-value className={window.location.pathname === "/" ? "active" : ""}>
-                  <Link to='/' >
-                    <a >
-                      Dashboard
-                    </a>
-                  </Link>
-                </li>
                 <li data-value className={window.location.pathname === "/users" ? "active" : ""}>
                   <Link to='/users' >
                     <a >
@@ -134,6 +126,13 @@ export default class HomePage extends React.PureComponent {
                     <a >
                       Manage Projects
                   </a>
+                  </Link>
+                </li>
+                <li data-value className={window.location.pathname === "/labels" ? "active" : ""}>
+                  <Link to='/labels' >
+                    <a >
+                      Manage Labels
+                    </a>
                   </Link>
                 </li>
 
@@ -159,7 +158,7 @@ export default class HomePage extends React.PureComponent {
         </div>
         <div className="footer">
           <ul className="listStyleNone text-right">
-            <li><p>© 2020 VPS, All rights reserved. Version - <b class="text-dark">v2020-05.140</b></p></li>
+            <li><p>© 2023 Task Manager, All rights reserved. Version - <b class="text-dark">v2024-05.140</b></p></li>
             <li><a class="text-primary" href="#" target="_blank">About Us</a></li>
             <li><a class="text-primary" href="#" target="_blank">Contact</a></li>
             <li><a class="text-primary cursor-pointer">Help</a></li></ul></div>
