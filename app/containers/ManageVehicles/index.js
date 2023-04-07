@@ -54,7 +54,7 @@ export class ManageVehicles extends React.Component {
     modal: false
   }
   componentDidMount() {
-
+    console.log("this.props--",this.props)
     this.props.getVehicles();
   }
 

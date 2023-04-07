@@ -20,7 +20,7 @@ export const apis= {
    PARKING_AREA_APIS_BASE_URL: "api/v1/area",
 
   /*OTHER APIS*/
-   LOGIN: 'api/v1/login',
+   LOGIN: 'api/v1/auth/signin',
    GET_SLOTS_BY_PARKING_AREA_ID: "api/v1/area/{id}/slots",
    GET_PARKING_AREA_STATS:"api/v1/area/{id}/slots/stats"
 }
@@ -30,6 +30,7 @@ export function* apiCallHandler(action, responseConst, errorConst, apiUrlConstan
     console.log("inside apiCallHandler calling api----",apiUrlConstant)
     yield [apiTryBlockHandler(action, responseConst, apiUrlConstant,type,isBaseUrl, isLoading)];
   } catch (error) {
+    console.log("error---"+error)
     yield [COMMON_UTILS.ErrorCheck(action, error, errorConst)];
   } finally {
     isLoading ? yield put({ type: 'hide_loader' }) : null
@@ -60,7 +61,7 @@ function* apiTryBlockHandler(action,responseConst,apiUrlConstant,type,isBaseUrl,
 
     switch (apiName) {
       case "LOGIN": {
-        const response = yield call(axios.post, window.URL+"api/v1/auth/signin", action.payload);
+        const response = yield call(axios.post, window.URL+apis.LOGIN, action.payload);
         yield put({type: responseConst, response: response.data.data})
         break;
       }

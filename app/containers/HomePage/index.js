@@ -55,11 +55,10 @@ export default class HomePage extends React.PureComponent {
   state = {
     routes: [
       { "path": "/users", "component": ManageUsers },
-      { "path": "/revenues", "component": ManageRevenues },
-      { "path": "/parkingAreas", "component": ParkingAreas },
-      { "path": "/projects", "component": ManageVehicles },
-      { "path": "/addOrEditParkingArea/:id?", "component": AddOrEditParkingArea },
-      { "path": "/", "component": Dashboard }
+      { "path": "/tasks", "component": ParkingAreas },
+      { "path": "/", "component": ManageVehicles },
+      // { "path": "/addOrEditParkingArea/:id?", "component": AddOrEditParkingArea },
+      // { "path": "/", "component": Dashboard }
     ],
     activeTabName: '',
   }
@@ -106,13 +105,7 @@ export default class HomePage extends React.PureComponent {
             </div>
             <div className="menuList">
               <ul id="sideNav" >
-                <li data-value className={window.location.pathname === "/" ? "active" : ""}>
-                  <Link to='/' >
-                    <a >
-                     Dashboard
-                  </a>
-                  </Link>
-                </li>
+
                 <li data-value className={window.location.pathname === "/users" ? "active" : ""}>
                   <Link to='/users' >
                     <a >
@@ -121,28 +114,19 @@ export default class HomePage extends React.PureComponent {
                   </Link>
                 </li>
 
-                <li data-value className={window.location.pathname === "/revenues" ? "active" : ""}>
+                <li data-value className={window.location.pathname === "/tasks" ? "active" : ""}>
                   <Link to='/revenues' >
                     <a >
-                      Manage Price List
+                      Manage Tasks
                   </a>
                   </Link>
                 </li>
 
 
-                <li data-value className={window.location.pathname === "/projects" ? "active" : ""}>
-                  <Link to='/projects' >
+                <li data-value className={window.location.pathname === "/" ? "active" : ""}>
+                  <Link to='/' >
                     <a >
                       Manage Projects
-                  </a>
-                  </Link>
-                </li>
-
-
-                <li data-value className={window.location.pathname === "/parkingAreas" || window.location.pathname.includes("addOrEditParkingArea") ? "active" : ""}>
-                  <Link to='/parkingAreas' >
-                    <a >
-                      Parking Areas
                   </a>
                   </Link>
                 </li>
