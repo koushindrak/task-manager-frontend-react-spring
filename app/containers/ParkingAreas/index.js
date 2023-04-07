@@ -173,7 +173,7 @@ export class ParkingAreas extends React.Component {
   getBookingListener(nextProps) {
     if (commonUtils.compare(nextProps.bookingSlotSuccess, this.props.bookingSlotSuccess)) {
       this.props.getSlotsDetails(this.state.id)
-      this.manageNotificationModal(true, nextProps.bookingSlotSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.bookingSlotSuccess.displayMessage, "success")
     }
     if (commonUtils.compare(nextProps.bookingSlotError, this.props.bookingSlotError)) {
       this.manageNotificationModal(true, nextProps.bookingSlotError.error, "danger")
@@ -210,7 +210,7 @@ export class ParkingAreas extends React.Component {
   deleteParkingAreaListener(nextProps) {
     if (commonUtils.compare(nextProps.deleteParkingAreaSuccess, this.props.deleteParkingAreaSuccess)) {
       this.props.getParkingAreas()
-      this.manageNotificationModal(true, nextProps.deleteParkingAreaSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.deleteParkingAreaSuccess.displayMessage, "success")
     }
     if (commonUtils.compare(nextProps.deleteParkingAreaFailure, this.props.deleteParkingAreaFailure)) {
       this.manageNotificationModal(true, nextProps.deleteParkingAreaFailure.error, "danger")

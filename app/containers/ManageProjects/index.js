@@ -87,6 +87,7 @@ export class ManageProjects extends React.Component {
     {
       Header: 'End Date',
       Cell: row => (<span>{new Date(row.original.endDate).toLocaleString('en-US')}</span>),
+      accessor: 'endDate',
       filterable: false,
       style: { textAlign: "center" },
     },
@@ -133,7 +134,7 @@ export class ManageProjects extends React.Component {
   createProjectListener(nextProps) {
     if(commonUtils.compare(nextProps.createProjectSuccess,this.props.createProjectSuccess)){
       this.props.getProjects()
-      this.manageNotificationModal(true, nextProps.createProjectSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.createProjectSuccess.displayMessage, "success")
       $('#myModal').css({display: "none"})
 
     }
@@ -180,7 +181,7 @@ export class ManageProjects extends React.Component {
   updateProjectListener(nextProps) {
     if(commonUtils.compare(nextProps.updateProjectSuccess,this.props.updateProjectSuccess)){
       this.props.getProjects()
-      this.manageNotificationModal(true, nextProps.updateProjectSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.updateProjectSuccess.displayMessage, "success")
       $('#myModal').css({display: "none"})
 
     }
@@ -192,7 +193,7 @@ export class ManageProjects extends React.Component {
   deleteProjectListener(nextProps) {
     if(commonUtils.compare(nextProps.deleteProjectSuccess,this.props.deleteProjectSuccess)){
       this.props.getProjects()
-      this.manageNotificationModal(true, nextProps.deleteProjectSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.deleteProjectSuccess.displayMessage, "success")
     }
     if(commonUtils.compare(nextProps.deleteProjectFailure,this.props.deleteProjectFailure)){
       this.manageNotificationModal(true, nextProps.deleteProjectFailure.error, "danger")
@@ -213,10 +214,10 @@ export class ManageProjects extends React.Component {
   addOrEditSubmitHandler = event => {
     event.preventDefault();
     let payload = this.state.payload;
+    payload.startDate = Date.parse(payload.startDate)
+    payload.endDate = Date.parse(payload.endDate)
     if(this.state.isEditProject){
       payload.id=this.state.selectedProjectId;
-      payload.startDate = Date.parse(payload.startDate)
-      payload.endDate = Date.parse(payload.endDate)
       this.props.updateProject(payload);
     }else {
       this.props.createProject(payload);
@@ -236,7 +237,10 @@ export class ManageProjects extends React.Component {
 
   convertStartDateToDateTimeLocal = event => {
     const milliseconds =this.state.payload.startDate; // Example milliseconds value
-    return this.getDateTimeLocal(milliseconds);
+    if (milliseconds !== undefined) { // Add this check
+      return this.getDateTimeLocal(milliseconds);
+    }
+    return '';
   }
 
   convertEndDateToDateTimeLocal = event => {

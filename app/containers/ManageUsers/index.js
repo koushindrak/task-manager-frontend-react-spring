@@ -141,7 +141,7 @@ export class ManageUsers extends React.Component {
   }*/
   updateUserListener(nextProps){
     if(nextProps.updateUserByIdSuccess && this.props.updateUserByIdSuccess !== nextProps.updateUserByIdSuccess){
-      this.manageNotificationModal(true,nextProps.updateUserByIdSuccess.message,"success")
+      this.manageNotificationModal(true,nextProps.updateUserByIdSuccess.displayMessage,"success")
       $('#myModal').css({ display: "none" })
     }
     else if(nextProps.updateUserByIdFailure && this.props.updateUserByIdFailure !== nextProps.updateUserByIdFailure){
@@ -167,7 +167,7 @@ export class ManageUsers extends React.Component {
   createUserListener(nextProps) {
     if (nextProps.createUserSuccess && nextProps.createUserSuccess !== this.props.createUserSuccess) {
       this.props.getAllUsers();
-      this.manageNotificationModal(true,nextProps.createUserSuccess.message,"success")
+      this.manageNotificationModal(true,nextProps.createUserSuccess.displayMessage,"success")
       $('#myModal').css({display: "none"})
     }
     if(nextProps.createUserFailure && nextProps.createUserFailure !== this.props.createUserFailure){
@@ -195,7 +195,7 @@ export class ManageUsers extends React.Component {
 
   deleteUserListener(nextProps) {
     if (nextProps.deleteUserByIdSuccess && nextProps.deleteUserByIdSuccess !== this.props.deleteUserByIdSuccess) {
-      this.manageNotificationModal(true,nextProps.deleteUserByIdSuccess.message,"success")
+      this.manageNotificationModal(true,nextProps.deleteUserByIdSuccess.displayMessage,"success")
     }
     if (nextProps.deleteUserByIdFailure && nextProps.deleteUserByIdFailure !== this.props.deleteUserByIdFailure) {
       this.manageNotificationModal(true,nextProps.deleteUserByIdFailure.error,"danger");

@@ -68,7 +68,7 @@ export class ManageSession extends React.Component {
     return (
       <div className="loginContainer">
         <div className="loginBox">
-          <div className="loginHeader"><img src={require("../../assets/images/logo.jpg")} /></div>
+          {/*<div className="loginHeader"><img src={require("../../assets/images/logo.jpg")} /></div>*/}
           {this.state.isFetching ?
             <div className="loaderBox">
               <div className="loading">

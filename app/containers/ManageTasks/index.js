@@ -261,7 +261,7 @@ export class ManageTasks extends React.Component {
   deleteTaskListener(nextProps) {
     if(commonUtils.compare(nextProps.deleteTaskSuccess,this.props.deleteTaskSuccess)){
       this.props.getAllTasks()
-      this.manageNotificationModal(true, nextProps.deleteTaskSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.deleteTaskSuccess.displayMessage, "success")
     }
     if(commonUtils.compare(nextProps.deleteTaskFailure,this.props.deleteTaskFailure)){
       this.manageNotificationModal(true, nextProps.deleteTaskFailure.error, "danger")
@@ -279,9 +279,12 @@ export class ManageTasks extends React.Component {
   }
 
   addOrEditSubmitHandler = event => {
+    console.log("addOrEditSubmitHandler-payload",this.state.payload)
+
     event.preventDefault();
     let payload = this.state.payload;
     if(this.state.isEditTask){
+      console.log("payload--",payload)
       payload.id=this.state.selectedTaskId;
       payload.dueDate =  Date.parse(payload.dueDate)
       this.props.updateTask(payload);
@@ -299,12 +302,16 @@ export class ManageTasks extends React.Component {
   }
   onChangeHandler = event => {
     let payload = { ...this.state.payload }
+
     payload[event.currentTarget.id] = event.currentTarget.value;
     this.setState({ payload })
   }
-  convertDueDateToDateTimeLocal = event => {
-    const milliseconds =this.state.payload.dueDate; // Example milliseconds value
-    return this.getDateTimeLocal(milliseconds);
+  convertDueDateToDateTimeLocal = () => {
+    const milliseconds = this.state.payload.dueDate;
+    if (milliseconds !== undefined) { // Add this check
+      return this.getDateTimeLocal(milliseconds);
+    }
+    return ''; // or return a default value if dueDate is undefined
   }
 
   getDateTimeLocal(milliseconds) {
@@ -372,8 +379,8 @@ export class ManageTasks extends React.Component {
 
                   <div className="form-group">
                     <label htmlFor="dueDate">Task Due Date :</label>
-                    <input type="datetime-local" id="dueDate" autoComplete="off"
-                           value={this.convertDueDateToDateTimeLocal(this.state.payload.dueDate)}
+                    <input type="datetime-local" id="dueDate" autoComplete="on"
+                           value={this.convertDueDateToDateTimeLocal()}
                            className="form-control" placeholder="Task Due Date"
                            required onChange={this.onChangeHandler}/>
                   </div>

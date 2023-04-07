@@ -1,29 +1,14 @@
-# Use Node.js 10 as the base image
-FROM node:10
-
-# Install qemu-user-static for emulation support
-RUN apt-get update && \
-    apt-get install -y qemu-user-static && \
-    rm -rf /var/lib/apt/lists/*
-
-# Set the working directory in the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the application code to the container
-COPY . .
-# Generate the DLL manifest file
-RUN npm run build:dll
-
-# Build the ReactJS application
-RUN npm run build
-# Expose the port on which the application will run
-EXPOSE 3000
-
-# Start the application
-CMD ["npm", "start"]
+FROM ubuntu:16.04
+# Replace shell with bash so we can source files
+RUN apt-get update \
+    && apt-get install -y curl vim net-tools iputils-ping \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs
+RUN /bin/bash -c "source ~/.bashrc"
+RUN npm -v
+WORKDIR /SETUP
+COPY ./package.json ./
+RUN npm install --ignore-scripts
+COPY ./ ./
+EXPOSE 3001
+CMD ["npm", "run", "start"]

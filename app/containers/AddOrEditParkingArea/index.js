@@ -88,7 +88,7 @@ export class AddOrEditParkingArea extends React.Component {
 
   createParkingAreaListener(nextProps) {
     if (commonUtils.compare(nextProps.createParkingAreaSuccess, this.props.createParkingAreaSuccess)) {
-      this.manageNotificationModal(true, nextProps.createParkingAreaSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.createParkingAreaSuccess.displayMessage, "success")
       $('#myModal').css({ display: "none" })
       this.props.history.push("/parkingAreas")
     }
@@ -115,7 +115,7 @@ export class AddOrEditParkingArea extends React.Component {
 
   updateParkingAreaListener(nextProps) {
     if (commonUtils.compare(nextProps.updateParkingAreaSuccess, this.props.updateParkingAreaSuccess)) {
-      this.manageNotificationModal(true, nextProps.updateParkingAreaSuccess.message, "success")
+      this.manageNotificationModal(true, nextProps.updateParkingAreaSuccess.displayMessage, "success")
       this.props.history.push("/parkingAreas")
     }
     if (commonUtils.compare(nextProps.updateParkingAreaFailure, this.props.updateParkingAreaFailure)) {
