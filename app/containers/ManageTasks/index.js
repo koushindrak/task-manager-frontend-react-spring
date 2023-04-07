@@ -35,6 +35,11 @@ const statusColumn = {
   Header: 'Status',
   accessor: 'taskStatus',
   filterable: true,
+  filterMethod: (filter, row) => {
+    const value = row[filter.id] ?  row[filter.id].toLowerCase() : ""; // Convert data value to lowercase
+    const filterValue = filter.value.toLowerCase(); // Convert filter value to lowercase
+    return value.includes(filterValue); // Perform case-insensitive comparison
+  },
   style: { textAlign: "center" },
   Cell: row => (
     <div
