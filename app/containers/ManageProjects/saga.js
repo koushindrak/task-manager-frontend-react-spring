@@ -1,5 +1,5 @@
 import { take, takeEvery,call, put, select } from 'redux-saga/effects';
-import {apiCallHandler, apis, apiTypes} from "../../../apiCallHandler";
+import {apiCallHandler, apis, apiTypes} from "../../common-files/apiCallHandler";
 import * as CONSTANTS from ".//constants";
 
 export function* handleCreateProjectRequest(action) {

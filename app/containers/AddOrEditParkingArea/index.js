@@ -22,7 +22,7 @@ import messages from './messages';
 import Map from "./Map";
 import { GoogleMap, InfoWindow, Marker, withGoogleMap, withScriptjs } from "react-google-maps";
 import Autocomplete from "react-google-autocomplete";
-import * as commonUtils from "../../../commonUtils"
+import * as commonUtils from "../../common-files/commonUtils"
 import Geocode from "react-geocode";
 import { ParkingAreas } from "../ParkingAreas";
 import * as PA_ACTIONS from '../ParkingAreas/actions';

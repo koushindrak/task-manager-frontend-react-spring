@@ -1,7 +1,7 @@
 import { take,takeEvery, call, put, select } from 'redux-saga/effects';
 import axios from 'axios'
 import * as CONSTANTS from './constants'
-import {apiCallHandler, apis, apiTypes} from "../../../apiCallHandler";
+import {apiCallHandler, apis, apiTypes} from "../../common-files/apiCallHandler";
 import {getUserById} from "./actions";
 
 export function* getUsersApiAsyncHandler(action) {

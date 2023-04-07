@@ -1,27 +1,29 @@
-# Use Node version 10 as the base image
+# Use Node.js 10 as the base image
 FROM node:10
 
-# Set the working directory
+# Install qemu-user-static for emulation support
+RUN apt-get update && \
+    apt-get install -y qemu-user-static && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the working directory
+# Copy the application code to the container
 COPY . .
+# Generate the DLL manifest file
+RUN npm run build:dll
 
-# Build the React app
+# Build the ReactJS application
 RUN npm run build
-
-# Set the environment variable to production
-ENV NODE_ENV=production
-
-# Expose port 3000
+# Expose the port on which the application will run
 EXPOSE 3000
 
 # Start the application
 CMD ["npm", "start"]
-

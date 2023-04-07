@@ -27,7 +27,7 @@ import 'react-table/react-table.css';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import NotificationModal from '../../components/NotificationModal/Loadable'
-import * as commonUtils from '../../../commonUtils'
+import * as commonUtils from '../../common-files/commonUtils'
 
 const defaultButton = props => (
   <button type="button" {...props} >
