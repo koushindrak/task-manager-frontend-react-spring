@@ -56,9 +56,9 @@ export default class HomePage extends React.PureComponent {
     routes: [
       { "path": "/users", "component": ManageUsers },
       { "path": "/tasks", "component": ParkingAreas },
-      { "path": "/", "component": ManageProjects },
+      { "path": "/projects", "component": ManageProjects },
       // { "path": "/addOrEditParkingArea/:id?", "component": AddOrEditParkingArea },
-      // { "path": "/", "component": Dashboard }
+      { "path": "/", "component": Dashboard }
     ],
     activeTabName: '',
   }
@@ -105,7 +105,13 @@ export default class HomePage extends React.PureComponent {
             </div>
             <div className="menuList">
               <ul id="sideNav" >
-
+                <li data-value className={window.location.pathname === "/" ? "active" : ""}>
+                  <Link to='/' >
+                    <a >
+                      Dashboard
+                    </a>
+                  </Link>
+                </li>
                 <li data-value className={window.location.pathname === "/users" ? "active" : ""}>
                   <Link to='/users' >
                     <a >
@@ -115,7 +121,7 @@ export default class HomePage extends React.PureComponent {
                 </li>
 
                 <li data-value className={window.location.pathname === "/tasks" ? "active" : ""}>
-                  <Link to='/revenues' >
+                  <Link to='/tasks' >
                     <a >
                       Manage Tasks
                   </a>
@@ -123,8 +129,8 @@ export default class HomePage extends React.PureComponent {
                 </li>
 
 
-                <li data-value className={window.location.pathname === "/" ? "active" : ""}>
-                  <Link to='/' >
+                <li data-value className={window.location.pathname === "/projects" ? "active" : ""}>
+                  <Link to='/projects' >
                     <a >
                       Manage Projects
                   </a>
