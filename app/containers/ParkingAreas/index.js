@@ -267,7 +267,7 @@ export class ParkingAreas extends React.Component {
 
   }
 
-  onChangeVehicleNumber = (event) => {
+  onChangeProjectNumber = (event) => {
     let bookingPayload = { ...this.state.bookingPayload }
     bookingPayload.vehicleNo = event.target.value;
     this.setState({
@@ -380,8 +380,8 @@ export class ParkingAreas extends React.Component {
                   </div>
                   <div className="modal-body">
                     <div className="form-group">
-                      <label htmlFor="name">Vehicle Number :</label>
-                      <input type="text" id="name" autoComplete="off" disabled={this.state.bookingPayload.status === "OCCUPIED"} value={this.state.bookingPayload.vehicleNo} onChange={this.onChangeVehicleNumber} className="form-control" placeholder="Vehicle Number "
+                      <label htmlFor="name">Project Number :</label>
+                      <input type="text" id="name" autoComplete="off" disabled={this.state.bookingPayload.status === "OCCUPIED"} value={this.state.bookingPayload.vehicleNo} onChange={this.onChangeProjectNumber} className="form-control" placeholder="Project Number "
                         required />
                     </div>
                   </div>

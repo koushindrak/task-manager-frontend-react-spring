@@ -1,11 +1,11 @@
 /**
  *
- * Vehicles
+ * Projects
  *
  */
 /**
  *
- * ManageVehicles
+ * ManageProjects
  *
  */
 
@@ -39,15 +39,15 @@ let payload = {
   vehicleType: '',
   parkingAreaId:'',
 }
-export class ManageVehicles extends React.Component {
+export class ManageProjects extends React.Component {
   state = {
     vehicles: [],
     parkingAreas: [],
     payload: payload,
-    selectedVehicleId: '',
-    selectedVehicleData: {},
-    isEditVehicle: false,
-    isAddVehicle: false,
+    selectedProjectId: '',
+    selectedProjectData: {},
+    isEditProject: false,
+    isAddProject: false,
     openNotificationModal: false,
     type: '',
     message: '',
@@ -55,7 +55,7 @@ export class ManageVehicles extends React.Component {
   }
   componentDidMount() {
     console.log("this.props--",this.props)
-    this.props.getVehicles();
+    this.props.getProjects();
   }
 
   columns = [
@@ -96,8 +96,8 @@ export class ManageVehicles extends React.Component {
         return (
           <div>
             <button data-tip data-for={"edit" + row.original.id} onClick={()=>{
-              this.setState({ selectedVehicleId: row.original.id, addOrEditIsFetching: true, isEditVehicle:true });
-              this.props.getVehiclesById(row.original.id)
+              this.setState({ selectedProjectId: row.original.id, addOrEditIsFetching: true, isEditProject:true });
+              this.props.getProjectsById(row.original.id)
             }}>
               <FontAwesomeIcon icon={faPen} />
             </button>
@@ -106,8 +106,8 @@ export class ManageVehicles extends React.Component {
             </ReactTooltip>
 
             <button data-tip data-for={"delete" + row.original.id} onClick={() => {
-              this.setState({ selectedVehicleId: row.original.id });
-              this.props.deleteVehicle(row.original.id)
+              this.setState({ selectedProjectId: row.original.id });
+              this.props.deleteProject(row.original.id)
             }}>
               <FontAwesomeIcon icon={faTrash} />
             </button>
@@ -122,33 +122,33 @@ export class ManageVehicles extends React.Component {
 
 
   componentWillReceiveProps(nextProps, nextContext) {
-    this.createVehicleListener(nextProps);
-    this.getVehiclesListener(nextProps);
+    this.createProjectListener(nextProps);
+    this.getProjectsListener(nextProps);
     this.getParkingAreasListener(nextProps);
-    this.getVehiclesByIdListener(nextProps);
-    this.updateVehicleListener(nextProps);
-    this.deleteVehicleListener(nextProps);
+    this.getProjectsByIdListener(nextProps);
+    this.updateProjectListener(nextProps);
+    this.deleteProjectListener(nextProps);
   }
 
-  createVehicleListener(nextProps) {
-    if(commonUtils.compare(nextProps.createVehicleSuccess,this.props.createVehicleSuccess)){
-      this.props.getVehicles()
-      this.manageNotificationModal(true, nextProps.createVehicleSuccess.message, "success")
+  createProjectListener(nextProps) {
+    if(commonUtils.compare(nextProps.createProjectSuccess,this.props.createProjectSuccess)){
+      this.props.getProjects()
+      this.manageNotificationModal(true, nextProps.createProjectSuccess.message, "success")
       $('#myModal').css({display: "none"})
 
     }
-    if(commonUtils.compare(nextProps.createVehicleFailure,this.props.createVehicleFailure)){
+    if(commonUtils.compare(nextProps.createProjectFailure,this.props.createProjectFailure)){
       this.manageNotificationModal(
-        true, nextProps.createVehicleFailure.error, "danger")
+        true, nextProps.createProjectFailure.error, "danger")
     }
   }
 
-  getVehiclesListener(nextProps) {
-    if(commonUtils.compare(nextProps.getVehiclesSuccess,this.props.getVehiclesSuccess)){
-      this.setState({vehicles: nextProps.getVehiclesSuccess.data})
+  getProjectsListener(nextProps) {
+    if(commonUtils.compare(nextProps.getProjectsSuccess,this.props.getProjectsSuccess)){
+      this.setState({vehicles: nextProps.getProjectsSuccess.data})
     }
-    if(commonUtils.compare(nextProps.getVehiclesFailure,this.props.getVehiclesFailure)){
-      this.manageNotificationModal(true, nextProps.getVehiclesFailure.error, "danger")
+    if(commonUtils.compare(nextProps.getProjectsFailure,this.props.getProjectsFailure)){
+      this.manageNotificationModal(true, nextProps.getProjectsFailure.error, "danger")
     }
   }
 
@@ -161,41 +161,41 @@ export class ManageVehicles extends React.Component {
     }
   }
 
-  getVehiclesByIdListener(nextProps){
-    if(commonUtils.compare(nextProps.getVehiclesByIdSuccess,this.props.getVehiclesByIdSuccess)){
-      this.setState({selectedVehicleData: nextProps.getVehiclesByIdSuccess.data},()=>{
-        if(this.state.isEditVehicle){
+  getProjectsByIdListener(nextProps){
+    if(commonUtils.compare(nextProps.getProjectsByIdSuccess,this.props.getProjectsByIdSuccess)){
+      this.setState({selectedProjectData: nextProps.getProjectsByIdSuccess.data},()=>{
+        if(this.state.isEditProject){
 
-          this.setState({payload:nextProps.getVehiclesByIdSuccess.data},()=>{
+          this.setState({payload:nextProps.getProjectsByIdSuccess.data},()=>{
             $('#myModal').css({ display: "block" })
           })
         }
       })
     }
-    if(commonUtils.compare(nextProps.getVehiclesByIdFailure,this.props.getVehiclesByIdFailure)){
-      this.manageNotificationModal(true, nextProps.getVehiclesByIdFailure.error, "danger")
+    if(commonUtils.compare(nextProps.getProjectsByIdFailure,this.props.getProjectsByIdFailure)){
+      this.manageNotificationModal(true, nextProps.getProjectsByIdFailure.error, "danger")
     }
   }
 
-  updateVehicleListener(nextProps) {
-    if(commonUtils.compare(nextProps.updateVehicleSuccess,this.props.updateVehicleSuccess)){
-      this.props.getVehicles()
-      this.manageNotificationModal(true, nextProps.updateVehicleSuccess.message, "success")
+  updateProjectListener(nextProps) {
+    if(commonUtils.compare(nextProps.updateProjectSuccess,this.props.updateProjectSuccess)){
+      this.props.getProjects()
+      this.manageNotificationModal(true, nextProps.updateProjectSuccess.message, "success")
       $('#myModal').css({display: "none"})
 
     }
-    if(commonUtils.compare(nextProps.updateVehicleFailure,this.props.updateVehicleFailure)){
-      this.manageNotificationModal(true, nextProps.updateVehicleFailure.error, "danger")
+    if(commonUtils.compare(nextProps.updateProjectFailure,this.props.updateProjectFailure)){
+      this.manageNotificationModal(true, nextProps.updateProjectFailure.error, "danger")
     }
   }
 
-  deleteVehicleListener(nextProps) {
-    if(commonUtils.compare(nextProps.deleteVehicleSuccess,this.props.deleteVehicleSuccess)){
-      this.props.getVehicles()
-      this.manageNotificationModal(true, nextProps.deleteVehicleSuccess.message, "success")
+  deleteProjectListener(nextProps) {
+    if(commonUtils.compare(nextProps.deleteProjectSuccess,this.props.deleteProjectSuccess)){
+      this.props.getProjects()
+      this.manageNotificationModal(true, nextProps.deleteProjectSuccess.message, "success")
     }
-    if(commonUtils.compare(nextProps.deleteVehicleFailure,this.props.deleteVehicleFailure)){
-      this.manageNotificationModal(true, nextProps.deleteVehicleFailure.error, "danger")
+    if(commonUtils.compare(nextProps.deleteProjectFailure,this.props.deleteProjectFailure)){
+      this.manageNotificationModal(true, nextProps.deleteProjectFailure.error, "danger")
     }
   }
 
@@ -204,7 +204,7 @@ export class ManageVehicles extends React.Component {
   }
 
   addOnClickHandler = event => {
-    this.props.getVehicles();
+    this.props.getProjects();
     this.props.getParkingAreas();
     $('#myModal').css({ display: "block" })
     this.setState({ modal: true, payload })
@@ -213,13 +213,13 @@ export class ManageVehicles extends React.Component {
   addOrEditSubmitHandler = event => {
     event.preventDefault();
     let payload = this.state.payload;
-    if(this.state.isEditVehicle){
-      payload.id=this.state.selectedVehicleId;
+    if(this.state.isEditProject){
+      payload.id=this.state.selectedProjectId;
       payload.startDate = Date.parse(payload.startDate)
       payload.endDate = Date.parse(payload.endDate)
-      this.props.updateVehicle(payload);
+      this.props.updateProject(payload);
     }else {
-      this.props.createVehicle(payload);
+      this.props.createProject(payload);
     }
   }
   onCloseHandler = (index) => {
@@ -263,7 +263,7 @@ export class ManageVehicles extends React.Component {
             <div className="row">
               <div className="col-8">
 
-                <p><span>Manage Vehicles</span></p>
+                <p><span>Manage Projects</span></p>
               </div>
               <div className="col-4">
                 <button className="addButton"
@@ -291,7 +291,7 @@ export class ManageVehicles extends React.Component {
                 <div className="customModal-header">
                   <span className="close mr-r-10" onClick={() => $('#myModal').css({ display: "none" })}>&times;</span>
                   <button className="close">&#10003;</button>
-                  {this.state.isEditVehicle ? <p>Edit Project</p> : <p> Add Project</p>}
+                  {this.state.isEditProject ? <p>Edit Project</p> : <p> Add Project</p>}
                 </div>
                 <div className="customModal-body">
 
@@ -362,40 +362,40 @@ export class ManageVehicles extends React.Component {
   }
 }
 
-ManageVehicles.propTypes = {
+ManageProjects.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  createVehicleSuccess: SELECTORS.createVehicleSuccess(),
-  createVehicleFailure: SELECTORS.createVehicleFailure(),
+  createProjectSuccess: SELECTORS.createProjectSuccess(),
+  createProjectFailure: SELECTORS.createProjectFailure(),
 
-  getVehiclesSuccess: SELECTORS.getVehicleSuccess(),
-  getVehiclesFailure: SELECTORS.getVehicleFailure(),
+  getProjectsSuccess: SELECTORS.getProjectSuccess(),
+  getProjectsFailure: SELECTORS.getProjectFailure(),
 
   getParkingAreasSuccess: SELECTORS.getParkingAreasSuccess(),
   getParkingAreasFailure: SELECTORS.getParkingAreasFailure(),
 
-  getVehiclesByIdSuccess: SELECTORS.getVehicleByIdSuccess(),
-  getVehiclesByIdFailure: SELECTORS.getVehicleByIdFailure(),
+  getProjectsByIdSuccess: SELECTORS.getProjectByIdSuccess(),
+  getProjectsByIdFailure: SELECTORS.getProjectByIdFailure(),
 
-  updateVehicleSuccess: SELECTORS.updateVehicleSuccess(),
-  updateVehicleFailure: SELECTORS.updateVehicleFailure(),
+  updateProjectSuccess: SELECTORS.updateProjectSuccess(),
+  updateProjectFailure: SELECTORS.updateProjectFailure(),
 
-  deleteVehicleSuccess: SELECTORS.deleteVehicleSuccess(),
-  deleteVehicleFailure: SELECTORS.deleteVehicleFailure()
+  deleteProjectSuccess: SELECTORS.deleteProjectSuccess(),
+  deleteProjectFailure: SELECTORS.deleteProjectFailure()
 });
 
 function mapDispatchToProps(dispatch) {
 
   return {
     dispatch,
-    createVehicle : payload => dispatch(ACTIONS.createVehicle(payload)),
-    getVehicles: () => dispatch(ACTIONS.getVehicles()),
+    createProject : payload => dispatch(ACTIONS.createProject(payload)),
+    getProjects: () => dispatch(ACTIONS.getProjects()),
     getParkingAreas: () => dispatch(ACTIONS.getParkingAreas()),
-    getVehiclesById: id => dispatch(ACTIONS.getVehicleById(id)),
-    updateVehicle: (payload) => dispatch(ACTIONS.updateVehicle(payload)),
-    deleteVehicle: id => dispatch(ACTIONS.deleteVehicle(id))
+    getProjectsById: id => dispatch(ACTIONS.getProjectById(id)),
+    updateProject: (payload) => dispatch(ACTIONS.updateProject(payload)),
+    deleteProject: id => dispatch(ACTIONS.deleteProject(id))
   };
 }
 
@@ -405,11 +405,11 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-const withReducer = injectReducer({ key: 'manageVehicles', reducer });
-const withSaga = injectSaga({ key: 'manageVehicles', saga });
+const withReducer = injectReducer({ key: 'manageProjects', reducer });
+const withSaga = injectSaga({ key: 'manageProjects', saga });
 
 export default compose(
   withReducer,
   withSaga,
   withConnect,
-)(ManageVehicles);
+)(ManageProjects);

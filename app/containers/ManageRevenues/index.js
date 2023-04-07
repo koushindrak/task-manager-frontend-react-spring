@@ -65,7 +65,7 @@ export class ManageRevenues extends React.Component {
       style: { textAlign: "center" }
     },
     {
-      Header: 'Vehicle Type',
+      Header: 'Project Type',
       accessor: 'vehicleType',
       filterable: true,
       style: { textAlign: "center" },
@@ -260,7 +260,7 @@ export class ManageRevenues extends React.Component {
                   </div>
 
                   <div className="form-group">
-                    <label form="vehicleType"> Vehicle Type : </label>
+                    <label form="vehicleType"> Project Type : </label>
                     <select name="vehicleType" id="vehicleType" value={this.state.payload.vehicleType} required onChange={this.onChangeHandler}>
                       <option key="CAR" value="CAR">Car</option>)
                       <option key="BIKE" value="BIKE">Bike</option>)

@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for ManageVehicles
+ * Asynchronously loads the component for ManageProjects
  *
  */
 

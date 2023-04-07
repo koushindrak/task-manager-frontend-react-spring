@@ -46,7 +46,7 @@ export function* watchGetSlotsDetailsRequest() {
 
 
 export function* bookingSlotRequest(action) {
-  yield [apiCallHandler(action, CONSTANTS.BOOKING_SLOT_SUCCESS, CONSTANTS.BOOKING_SLOT_FAILURE, apis.VEHICLE_APIS_BASE_URL,apiTypes.CREATE)];
+  yield [apiCallHandler(action, CONSTANTS.BOOKING_SLOT_SUCCESS, CONSTANTS.BOOKING_SLOT_FAILURE, apis.PROJECT_APIS_BASE_URL,apiTypes.CREATE)];
 }
 
 export function* watcherBookParkingArea() {
@@ -54,7 +54,7 @@ export function* watcherBookParkingArea() {
 }
 
 export function* releaseSlotRequest(action) {
-  yield [apiCallHandler(action, CONSTANTS.RELEASE_SLOT_SUCCESS, CONSTANTS.RELEASE_SLOT_FAILURE, apis.VEHICLE_APIS_BASE_URL,apiTypes.DELETE_BY_ID)];
+  yield [apiCallHandler(action, CONSTANTS.RELEASE_SLOT_SUCCESS, CONSTANTS.RELEASE_SLOT_FAILURE, apis.PROJECT_APIS_BASE_URL,apiTypes.DELETE_BY_ID)];
 }
 
 export function* watcherReleaseSlot() {

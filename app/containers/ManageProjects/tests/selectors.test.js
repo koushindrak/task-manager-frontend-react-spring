@@ -1,7 +1,7 @@
 // import { fromJS } from 'immutable';
-// import { selectManageVehiclesDomain } from '../selectors';
+// import { selectManageProjectsDomain } from '../selectors';
 
-describe('selectManageVehiclesDomain', () => {
+describe('selectManageProjectsDomain', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });

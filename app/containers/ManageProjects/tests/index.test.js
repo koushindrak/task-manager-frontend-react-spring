@@ -1,9 +1,9 @@
 // import React from 'react';
 // import { shallow } from 'enzyme';
 
-// import { ManageVehicles } from '../index';
+// import { ManageProjects } from '../index';
 
-describe('<ManageVehicles />', () => {
+describe('<ManageProjects />', () => {
   it('Expect to have unit tests specified', () => {
     expect(true).toEqual(false);
   });
