@@ -7,8 +7,7 @@
     "url": "git://github.com/react-boilerplate/react-boilerplate.git"
   },
   "engines": {
-    "npm": ">=5",
-    "node": ">=8"
+    "node": ">=14.0.0 <15"
   },
   "author": "Max Stoiber",
   "license": "MIT",
@@ -144,9 +143,16 @@
     ]
   },
   "dependencies": {
+    "@mui/x-data-grid": "^5.11.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fontsource/roboto": "^4.5.8",
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.11.16",
+    "@mui/styled-engine-sc": "^5.11.11",
     "axios": "^0.19.2",
     "babel-polyfill": "6.26.0",
     "chalk": "2.4.1",
@@ -164,8 +170,8 @@
     "lodash": "4.17.10",
     "minimist": "1.2.0",
     "prop-types": "15.6.1",
-    "react": "16.4.1",
-    "react-dom": "16.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-geocode": "^0.2.1",
     "react-google-autocomplete": "^1.2.4",
     "react-google-maps": "^9.4.5",
@@ -186,7 +192,7 @@
     "redux-saga": "0.16.0",
     "reselect": "3.0.1",
     "sanitize.css": "4.1.0",
-    "styled-components": "3.3.2",
+    "styled-components": "^3.3.2",
     "warning": "4.0.1",
     "whatwg-fetch": "2.0.4"
   },
@@ -245,7 +251,7 @@
     "plop": "2.0.0",
     "pre-commit": "1.2.2",
     "prettier": "1.13.5",
-    "react-test-renderer": "16.4.1",
+    "react-test-renderer": "18.2.0",
     "rimraf": "2.6.2",
     "shelljs": "0.8.2",
     "style-loader": "0.21.0",

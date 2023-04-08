@@ -170,7 +170,6 @@ body .container{
 /* Login form */
 
 .loginContainer {
-    background-image: url("../images/parking.jpg");
     width: 100%;
     height: -webkit-fill-available;
     transition: 0.55s ease-in-out;

@@ -100,7 +100,6 @@ export default class HomePage extends React.PureComponent {
         <div className="sideNav" id="sideNav">
           <div className="menuNavigationSlideWrapper" id="menuNavigationSlideWrapper">
             <div className="vpsLogo">
-              <img src={require('../../assets/images/mainLogo.jpg')} height="200px" width="200px"></img>
 
             </div>
             <div className="menuList">
