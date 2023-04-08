@@ -28,9 +28,33 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import NotificationModal from '../../components/NotificationModal/Loadable'
 import * as commonUtils from '../../common-files/commonUtils'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import {DataGrid, GridColDef, GridToolbar, GridValueGetterParams} from '@mui/x-data-grid';
 import {columns1} from "./column_constants";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const darkTheme = createTheme({
+  palette: {
+    background: {
+      default: '#130101', // Set the background color
+      paper: '#e52323', // Set the background color for the paper component
+    },
+  },
+  overrides: {
+    // Override the styles for the DataGrid component
+    MuiDataGrid: {
+      root: {
+        '& .MuiDataGrid-cell': {
+          color: 'black', // Set the font color to white
+        },
+        '& .MuiDataGrid-row': {
+          '&:hover': {
+            backgroundColor: '#0c3396', // Set the hover background color
+          },
+        },
+      },
+    },
+  },
+});
 const defaultButton = props => (
   <button type="button" {...props} >
     {props.children}
@@ -60,68 +84,6 @@ export class ManageProjects extends React.Component {
     this.props.getProjects();
   }
 
-  columns = [
-    {
-      Header: 'Name',
-      accessor:'name',
-      filterable: true,
-      style: { textAlign: "center" }
-    },
-    {
-      Header: 'Description',
-      accessor: 'description',
-      filterable: true,
-      style: { textAlign: "center" }
-    },
-    {
-      Header: 'Start Date',
-      Cell: row => (<span>{new Date(row.original.startDate).toLocaleString('en-US')}</span>),
-      accessor: 'startDate',
-      filterable: true,
-      style: { textAlign: "center" },
-    },
-    // {
-    //   Header: 'Parking Area GPS Coordinates',
-    //   Cell: row => (<span>{row.original.lat + "," + row.original.lng}</span>),
-    //   filterable: true,
-    //   style: { textAlign: "center" },
-    // },
-    {
-      Header: 'End Date',
-      Cell: row => (<span>{new Date(row.original.endDate).toLocaleString('en-US')}</span>),
-      accessor: 'endDate',
-      filterable: false,
-      style: { textAlign: "center" },
-    },
-    {
-      Header: 'Actions',
-      Cell: row => {
-        return (
-          <div>
-            <button data-tip data-for={"edit" + row.original.id} onClick={()=>{
-              this.setState({ selectedProjectId: row.original.id, addOrEditIsFetching: true, isEditProject:true });
-              this.props.getProjectsById(row.original.id)
-            }}>
-              <FontAwesomeIcon icon={faPen} />
-            </button>
-            <ReactTooltip id={"edit" + row.original.id} place="bottom" type="dark">
-              <div className="tooltipText"><p>Edit</p></div>
-            </ReactTooltip>
-
-            <button data-tip data-for={"delete" + row.original.id} onClick={() => {
-              this.setState({ selectedProjectId: row.original.id });
-              this.props.deleteProject(row.original.id)
-            }}>
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
-            <ReactTooltip id={"delete" + row.original.id} place="bottom" type="dark">
-              <div className="tooltipText"><p>Delete</p></div>
-            </ReactTooltip>
-          </div>
-        )
-      }
-    }
-  ];
 
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -265,18 +227,8 @@ export class ManageProjects extends React.Component {
     return (
       <div>
         <React.Fragment >
+          <ThemeProvider theme={darkTheme}>
 
-          {/*<div className="contentContainer">*/}
-          {/*  <ReactTable*/}
-          {/*    data={this.state.vehicles}*/}
-          {/*    columns={this.columns}*/}
-          {/*    defaultPageSize={10}*/}
-          {/*    noDataText={"No Data Found"}*/}
-          {/*    className="customReactTable"*/}
-          {/*    PreviousComponent={defaultButton}*/}
-          {/*    NextComponent={defaultButton}*/}
-          {/*  />*/}
-          {/*</div>*/}
           <div style={{ height: 350, width: '100%',paddingTop:20 }}>
 
             <DataGrid
@@ -285,8 +237,13 @@ export class ManageProjects extends React.Component {
               pageSize={5}
               rowsPerPageOptions={[5]}
               checkboxSelection
+              components={{
+                Toolbar: GridToolbar, // Use the GridToolbar component for the toolbar
+              }}
             />
           </div>
+          </ThemeProvider>
+
           <div id="myModal" className="customModal">
             <form onSubmit={this.addOrEditSubmitHandler}>
               <div className="customModal-content">
