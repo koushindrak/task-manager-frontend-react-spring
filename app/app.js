@@ -38,6 +38,7 @@ import { translationMessages } from './i18n';
 // Import CSS reset and Global Styles
 import './global-styles';
 import './assets/css/main.css';
+import './assets/css/sidebar.css';
 
 // Create redux store with history
 const initialState = {};
