@@ -34,9 +34,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const darkTheme = createTheme({
   palette: {
+    mode: 'light', // Set the palette mode to dark
     background: {
-      default: '#130101', // Set the background color
-      paper: '#e52323', // Set the background color for the paper component
+      default: '#303030', // Set the background color
+      paper: '#efe0e0', // Set the background color for the paper component
     },
   },
   overrides: {
@@ -44,11 +45,11 @@ const darkTheme = createTheme({
     MuiDataGrid: {
       root: {
         '& .MuiDataGrid-cell': {
-          color: 'black', // Set the font color to white
+          color: 'white', // Set the font color to white
         },
         '& .MuiDataGrid-row': {
           '&:hover': {
-            backgroundColor: '#0c3396', // Set the hover background color
+            backgroundColor: '#ffffff', // Set the hover background color
           },
         },
       },
