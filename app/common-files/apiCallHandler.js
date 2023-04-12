@@ -21,6 +21,7 @@ export const apis= {
 
   /*OTHER APIS*/
    LOGIN: 'api/v1/auth/signin',
+   SIGNUP: 'api/v1/auth/signup',
    GET_SLOTS_BY_PARKING_AREA_ID: "api/v1/area/{id}/slots",
    GET_PARKING_AREA_STATS:"api/v1/area/{id}/slots/stats"
 }
@@ -62,7 +63,14 @@ function* apiTryBlockHandler(action,responseConst,apiUrlConstant,type,isBaseUrl,
     switch (apiName) {
       case "LOGIN": {
         const response = yield call(axios.post, window.URL+apis.LOGIN, action.payload);
+        console.log("SIGNIN-RESPONSE-OBJECT-IN-TRY-BLOCK3---",response)
         yield put({type: responseConst, response: response.data.data})
+        break;
+      }
+      case "SIGNUP": {
+        const response = yield call(axios.post, window.URL+apis.SIGNUP, action.payload);
+        console.log("SIGNUP-RESPONSE-OBJECT-IN-TRY-BLOCK4---",response)
+        yield put({type: responseConst, response: response.data})
         break;
       }
       case "GET_PARKING_AREA_STATS":
