@@ -28,34 +28,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPen, faTrash} from "@fortawesome/free-solid-svg-icons";
 import NotificationModal from '../../components/NotificationModal/Loadable'
 import * as commonUtils from '../../common-files/commonUtils'
-import {DataGrid, GridColDef, GridToolbar, GridValueGetterParams} from '@mui/x-data-grid';
-import {columns1} from "./column_constants";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'light', // Set the palette mode to dark
-    background: {
-      default: '#303030', // Set the background color
-      paper: '#efe0e0', // Set the background color for the paper component
-    },
-  },
-  overrides: {
-    // Override the styles for the DataGrid component
-    MuiDataGrid: {
-      root: {
-        '& .MuiDataGrid-cell': {
-          color: 'white', // Set the font color to white
-        },
-        '& .MuiDataGrid-row': {
-          '&:hover': {
-            backgroundColor: '#ffffff', // Set the hover background color
-          },
-        },
-      },
-    },
-  },
-});
 const defaultButton = props => (
   <button type="button" {...props} >
     {props.children}
@@ -85,6 +58,68 @@ export class ManageProjects extends React.Component {
     this.props.getProjects();
   }
 
+  columns = [
+    {
+      Header: 'Name',
+      accessor:'name',
+      filterable: true,
+      style: { textAlign: "center" }
+    },
+    {
+      Header: 'Description',
+      accessor: 'description',
+      filterable: true,
+      style: { textAlign: "center" }
+    },
+    {
+      Header: 'Start Date',
+      Cell: row => (<span>{new Date(row.original.startDate).toLocaleString('en-US')}</span>),
+      accessor: 'startDate',
+      filterable: true,
+      style: { textAlign: "center" },
+    },
+    // {
+    //   Header: 'Parking Area GPS Coordinates',
+    //   Cell: row => (<span>{row.original.lat + "," + row.original.lng}</span>),
+    //   filterable: true,
+    //   style: { textAlign: "center" },
+    // },
+    {
+      Header: 'End Date',
+      Cell: row => (<span>{new Date(row.original.endDate).toLocaleString('en-US')}</span>),
+      accessor: 'endDate',
+      filterable: false,
+      style: { textAlign: "center" },
+    },
+    {
+      Header: 'Actions',
+      Cell: row => {
+        return (
+          <div>
+            <button data-tip data-for={"edit" + row.original.id} onClick={()=>{
+              this.setState({ selectedProjectId: row.original.id, addOrEditIsFetching: true, isEditProject:true });
+              this.props.getProjectsById(row.original.id)
+            }}>
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+            <ReactTooltip id={"edit" + row.original.id} place="bottom" type="dark">
+              <div className="tooltipText"><p>Edit</p></div>
+            </ReactTooltip>
+
+            <button data-tip data-for={"delete" + row.original.id} onClick={() => {
+              this.setState({ selectedProjectId: row.original.id });
+              this.props.deleteProject(row.original.id)
+            }}>
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+            <ReactTooltip id={"delete" + row.original.id} place="bottom" type="dark">
+              <div className="tooltipText"><p>Delete</p></div>
+            </ReactTooltip>
+          </div>
+        )
+      }
+    }
+  ];
 
 
   componentWillReceiveProps(nextProps, nextContext) {
@@ -228,22 +263,31 @@ export class ManageProjects extends React.Component {
     return (
       <div>
         <React.Fragment >
-          <ThemeProvider theme={darkTheme}>
+          <div className="contentHeader">
+            <div className="row">
+              <div className="col-8">
 
-          <div style={{ height: 350, width: '100%',paddingTop:20 }}>
+                <p><span>Manage Projects</span></p>
+              </div>
+              <div className="col-4">
+                <button className="addButton"
+                        onClick={this.addOnClickHandler}> <span>&#43;</span>
+                </button>
+              </div>
+            </div>
 
-            <DataGrid
-              rows={this.state.vehicles}
-              columns={columns1}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              checkboxSelection
-              components={{
-                Toolbar: GridToolbar, // Use the GridToolbar component for the toolbar
-              }}
+          </div>
+          <div className="contentContainer">
+            <ReactTable
+              data={this.state.vehicles}
+              columns={this.columns}
+              defaultPageSize={10}
+              noDataText={"No Data Found"}
+              className="customReactTable"
+              PreviousComponent={defaultButton}
+              NextComponent={defaultButton}
             />
           </div>
-          </ThemeProvider>
 
           <div id="myModal" className="customModal">
             <form onSubmit={this.addOrEditSubmitHandler}>
@@ -309,11 +353,11 @@ export class ManageProjects extends React.Component {
             </form>
           </div>
           {this.state.openNotificationModal &&
-          <NotificationModal
-            type={this.state.type}
-            message={this.state.message}
-            onCloseHandler={this.onCloseHandler}
-          />
+            <NotificationModal
+              type={this.state.type}
+              message={this.state.message}
+              onCloseHandler={this.onCloseHandler}
+            />
           }
         </React.Fragment>
 
