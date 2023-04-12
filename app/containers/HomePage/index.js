@@ -14,7 +14,24 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { Switch, Route, Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-
+const logoStyle = {
+  display: 'flex',
+  marginBottom: '60px',
+  marginTop: '30px',
+  // marginLeft: '50px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  // backgroundColor: '#76acf5',
+  color: '#ec1a1a',
+  borderRadius: '10%',
+  width: '100%',
+  height: '100px',
+  fontSize: '24px',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  textTransform: 'uppercase',
+  // boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)',
+};
 let allContainers = ["ManageUsers", "ManageTasks", "ParkingAreas", "ManageProjects", "AddOrEditParkingArea", "Dashboard"]
 
 allContainers.map(container => {
@@ -99,8 +116,9 @@ export default class HomePage extends React.PureComponent {
         /* SIDE NAVE */
         <div className="sideNav" id="sideNav">
           <div className="menuNavigationSlideWrapper" id="menuNavigationSlideWrapper">
-            <div className="vpsLogo">
-              <img src={require("../../images/to-do-list.png")} />
+            <div className="vpsLogo" style={logoStyle}>
+              {/*<img src={require("../../images/to-do-list.png")} />*/}
+              TO-DO List
             </div>
             <div className="menuList">
               <ul id="sideNav" >
