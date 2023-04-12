@@ -146,13 +146,13 @@ export default class HomePage extends React.PureComponent {
                   </a>
                   </Link>
                 </li>
-                <li data-value className={window.location.pathname === "/labels" ? "active" : ""}>
-                  <Link to='/labels' >
-                    <a >
-                      Manage Labels
-                    </a>
-                  </Link>
-                </li>
+                {/*<li data-value className={window.location.pathname === "/labels" ? "active" : ""}>*/}
+                {/*  <Link to='/labels' >*/}
+                {/*    <a >*/}
+                {/*      Manage Labels*/}
+                {/*    </a>*/}
+                {/*  </Link>*/}
+                {/*</li>*/}
 
               </ul>
             </div>
